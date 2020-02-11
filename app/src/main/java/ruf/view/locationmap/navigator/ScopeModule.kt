@@ -12,13 +12,15 @@ abstract class ScopeModule : Module() {
     abstract fun Scope.openSubScopes(): Scope
 
     fun installModule() {
-        if (isOpen()) close()
         KTP.openRootScope().openSubScopes().installModules(this)
     }
 
     fun isOpen() = KTP.isScopeOpen(createScopeName(this::class, individuality))
 
     fun close() = KTP.closeScope(createScopeName(this::class, individuality))
+
+    protected inline fun <reified M : ScopeModule> Scope.openSubScope(): Scope =
+        openSubScope(createScopeName(M::class, individuality))
 
     companion object {
         inline fun <reified SM : ScopeModule> Any.injectScope(individuality: String) {

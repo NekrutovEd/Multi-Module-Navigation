@@ -1,12 +1,14 @@
 package ruf.view.locationmap.navigator.list
 
+import ruf.view.locationmap.navigator.IPresenter
+import ruf.view.locationmap.navigator.IView
 import ruf.view.locationmap.navigator.Navigator
 import toothpick.InjectConstructor
 
 @InjectConstructor
 class ListPresenter constructor(
     private val router: ListRouter
-) {
+) : IPresenter {
 
     private var newNavigator: Navigator? = null
 
@@ -18,8 +20,11 @@ class ListPresenter constructor(
         newNavigator = router.createNavigator()
     }
 
-    fun stop() {
-        newNavigator?.close()
+    override fun attachView(view: IView) {
+        newNavigator?.restart()
     }
 
+    override fun detachView() {
+        newNavigator?.close()
+    }
 }

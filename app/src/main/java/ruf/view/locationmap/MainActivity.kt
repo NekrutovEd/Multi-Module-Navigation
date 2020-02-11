@@ -18,8 +18,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
 
+        //TODO supportFragmentManager протухает после пересоздания. Сделать возможность подменять его не теряя скоупа и стека.
         NavigatorModule(R.id.container, supportFragmentManager).installModule()
         injectNavigator(R.id.container)
-        mainNavigator.showFragmentScope(ListModule())
+        mainNavigator.forward(ListModule())
     }
 }

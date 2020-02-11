@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import ruf.view.locationmap.R
 import ruf.view.locationmap.navigator.FragmentModule.Companion.injectScope
+import ruf.view.locationmap.navigator.IView
 import toothpick.ktp.delegate.inject
 
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), IView {
 
     private val presenter: ListPresenter by inject()
 
@@ -31,8 +32,13 @@ class ListFragment : Fragment() {
         return view
     }
 
-    override fun onStop() {
-        super.onStop()
-        presenter.stop()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.attachView(this)
+    }
+
+    override fun onDestroyView() {
+        presenter.detachView()
+        super.onDestroyView()
     }
 }

@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import ruf.view.locationmap.R
 import ruf.view.locationmap.navigator.FragmentModule.Companion.injectScope
+import ruf.view.locationmap.navigator.IView
 import toothpick.ktp.delegate.inject
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), IView {
 
     private val presenter: DetailPresenter by inject()
 
@@ -24,10 +25,12 @@ class DetailFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_detail, container, false)
-        view.name.text = presenter.data.text
-        view.button1.setOnClickListener { presenter.addDetail() }
-        view.button2.setOnClickListener { presenter.closeDetail() }
-        return view
+        return inflater.inflate(R.layout.fragment_detail, container, false).apply {
+            name.text = presenter.data.text
+            add.setOnClickListener { presenter.addDetail() }
+            replace.setOnClickListener { presenter.replaceDetail() }
+            delete.setOnClickListener { presenter.removeDetail() }
+            close.setOnClickListener { presenter.closeDetail() }
+        }
     }
 }

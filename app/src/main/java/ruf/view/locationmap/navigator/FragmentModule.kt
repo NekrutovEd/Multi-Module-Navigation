@@ -18,9 +18,21 @@ abstract class FragmentModule : ScopeModule() {
 
     protected abstract fun createFragment(): Fragment
 
-    final override fun Scope.openSubScopes(): Scope =
-        openSubScope(createScopeName(NavigatorModule::class, individuality))
+    protected open fun Scope.openDependentScopes(): Scope = this
+
+    final override fun Scope.openSubScopes(): Scope {
+        return openSubScope<NavigatorModule>()
+            .openDependentScopes()
             .openSubScope(createScopeName(this@FragmentModule::class, individuality))
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        return true
+    }
+
+    override fun hashCode() = javaClass.hashCode()
 
     companion object {
         inline fun <reified SM : FragmentModule> Any.injectScope(arguments: Bundle?) {

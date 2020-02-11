@@ -15,7 +15,7 @@ class NavigatorModule(@IdRes private val containerId: Int, fragmentManager: Frag
         bind<Navigator>().toInstance(navigator)
     }
 
-    override fun Scope.openSubScopes(): Scope = openSubScope(createScopeName(NavigatorModule::class, individuality))
+    override fun Scope.openSubScopes(): Scope = openSubScope<NavigatorModule>()
 
     companion object {
         fun Any.injectNavigator(@IdRes containerId: Int) {

@@ -10,10 +10,10 @@ import toothpick.InjectConstructor
 class ListRouter(private val navigator: Navigator) {
 
     fun openDetail() {
-        navigator.showFragmentScope(DetailModule(DetailData("First detail")))
+        navigator.forward(DetailModule(DetailData("First detail")))
     }
 
     fun createNavigator(): Navigator {
-        return navigator.startNavigatorScope(R.id.child_container).apply { showFragmentScope(ListModule()) }
+        return navigator.startNavigatorScope(R.id.child_container).apply { forward(ListModule()) }
     }
 }
