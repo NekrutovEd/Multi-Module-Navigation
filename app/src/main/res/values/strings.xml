@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">LocationMap</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="key_maps_api">YP9hDbw6wrACGv1aSrLL1DtTyDjRL7Hd</string>
-    <string name="server_ip">Server IP</string>
+    <string name="app_name">Navigator</string>
+    <string name="title_activity_maps">Navigator</string>
 </resources>
