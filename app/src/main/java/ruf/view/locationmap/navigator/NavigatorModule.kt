@@ -1,25 +1,42 @@
 package ruf.view.locationmap.navigator
 
 import android.support.annotation.IdRes
-import android.support.v4.app.FragmentManager
 import toothpick.Scope
 import toothpick.ktp.binding.bind
 
-class NavigatorModule(@IdRes private val containerId: Int, fragmentManager: FragmentManager) : ScopeModule() {
+class NavigatorModule(@IdRes val containerId: Int, navigatorScopeName: Any = Any()) : ScopeModule() {
 
-    val navigator = Navigator(containerId, fragmentManager)
+    val navigator = Navigator(containerId, navigatorScopeName)
+
+    override val scopeName
+        get() = navigator.navigatorScopeName
 
     init {
-        individuality = containerId.toString()
-
         bind<Navigator>().toInstance(navigator)
     }
 
-    override fun Scope.openSubScopes(): Scope = openSubScope<NavigatorModule>()
+    override fun Scope.openSubScopes(): Scope = openSubScope(ScopeIdentifier(NavigatorModule::class, scopeName))
+
+    override fun onCloseScope() {
+        navigator.destroy()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as NavigatorModule
+
+        if (containerId != other.containerId) return false
+
+        return true
+    }
+
+    override fun hashCode() = containerId
 
     companion object {
-        fun Any.injectNavigator(@IdRes containerId: Int) {
-            injectScope<NavigatorModule>(containerId.toString())
+        fun Any.injectNavigator(scopeName: Any) {
+            injectScope<NavigatorModule>(scopeName)
         }
     }
 }

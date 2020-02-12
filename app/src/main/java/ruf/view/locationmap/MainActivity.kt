@@ -9,7 +9,6 @@ import ruf.view.locationmap.navigator.list.ListModule
 import toothpick.ktp.delegate.inject
 
 
-
 class MainActivity : AppCompatActivity() {
 
     private val mainNavigator: Navigator by inject()
@@ -18,9 +17,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
 
-        //TODO supportFragmentManager протухает после пересоздания. Сделать возможность подменять его не теряя скоупа и стека.
-        NavigatorModule(R.id.container, supportFragmentManager).installModule()
-        injectNavigator(R.id.container)
+        NavigatorModule(R.id.container, application).installModule()
+        injectNavigator(application)
         mainNavigator.forward(ListModule())
+        mainNavigator.attachFragmentManager(supportFragmentManager)
+    }
+
+    override fun onDestroy() {
+        mainNavigator.detachFragmentManager()
+        super.onDestroy()
     }
 }

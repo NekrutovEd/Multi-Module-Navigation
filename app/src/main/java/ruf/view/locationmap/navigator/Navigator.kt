@@ -1,12 +1,13 @@
 package ruf.view.locationmap.navigator
 
 import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import java.util.*
 import kotlin.collections.HashSet
+import kotlin.reflect.KClass
 
-class Navigator(@IdRes private val containerId: Int, private val fragmentManager: FragmentManager) {
+@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any) : INavigator<FragmentModule> {
 
 
     var counter = 0
@@ -14,76 +15,100 @@ class Navigator(@IdRes private val containerId: Int, private val fragmentManager
 
     private val stack = Stack<FragmentModule>()
 
+    private var fragmentManager: FragmentManager? = null
     private val childNavigators = HashSet<NavigatorModule>()
 
-    fun forward(module: FragmentModule) {
-        module.individuality = containerId.toString()
-        stack.push(module)
-        module.close()
-        module.installModule()
-        replace(module.fragment)
+    override fun forward(module: FragmentModule) {
+        module.run {
+            stack.push(module)
+            navigatorScopeName = this@Navigator.navigatorScopeName
+            installModule()
+            fragmentManager?.show(this)
+        }
     }
 
-    fun replace(module: FragmentModule) {
+    override fun replace(module: FragmentModule) {
         if (!stack.empty()) stack.pop().close()
         forward(module)
     }
 
-    fun back(): Boolean {
+    override fun back(): Boolean {
         if (stack.empty()) return false
         stack.pop().close()
         if (stack.empty()) return false
         stack.peek().run {
             installModule()
-            replace(fragment)
+            fragmentManager?.show(this)
         }
         return true
     }
 
-    fun backTo(module: FragmentModule): Boolean {
+    override fun <K : KClass<out FragmentModule>> backTo(moduleClass: K): Boolean {
         if (stack.empty()) return false
-        val distance = stack.search(module)
+        val distance = stack.search(stack.find { it::class == moduleClass })
         if (distance <= 1) return false
         for (i in 1 until distance) {
             stack.pop().close()
         }
         stack.peek().run {
             installModule()
-            replace(fragment)
+            fragmentManager?.show(this)
         }
         return true
     }
 
-    fun startNavigatorScope(@IdRes containerId: Int): Navigator {
-        val navigatorModule = NavigatorModule(containerId, fragmentManager)
+    override fun startNavigatorScope(@IdRes containerId: Int): Navigator {
+        childNavigators.find { it.containerId == containerId }
+            ?.also {
+                childNavigators.remove(it)
+                it.close()
+            }
+        val navigatorModule = NavigatorModule(containerId)
         childNavigators.add(navigatorModule)
-        navigatorModule.close()
         navigatorModule.installModule()
         return navigatorModule.navigator
     }
 
-    fun restart() {
-        stack.peek().run {
-            installModule()
-            replace(fragment)
+    override fun attachFragmentManager(fragmentManager: FragmentManager) {
+        this.fragmentManager = fragmentManager
+        stack.takeUnless { it.empty() }?.peek()?.run {
+            fragmentManager.show(this)
         }
         childNavigators.forEach {
-            it.installModule()
-            it.navigator.restart()
+            it.navigator.attachFragmentManager(fragmentManager)
         }
     }
 
-    fun close() {
+    override fun detachFragmentManager() {
+        fragmentManager = null
         childNavigators.forEach {
-            it.navigator.close()
+            it.navigator.detachFragmentManager()
+        }
+    }
+
+    override fun destroy() {
+        fragmentManager = null
+        stack.forEach {
+            fragmentManager?.remove(it)
             it.close()
         }
-        stack.forEach { it.close() }
+        childNavigators.forEach { it.close() }
+        stack.clear()
     }
 
-    private fun replace(fragment: Fragment) {
-        fragmentManager.beginTransaction()
-            .replace(containerId, fragment, this::class.java.name + containerId.toString())
-            .commit()
+    private fun FragmentManager.show(module: FragmentModule) {
+        findFragmentByTag(module.scopeName) ?: run {
+            beginTransaction()
+                .replace(containerId, module.fragment, module.scopeName)
+                .commit()
+        }
+    }
+
+    private fun FragmentManager.remove(module: FragmentModule) {
+        findFragmentByTag(module.scopeName)?.also {
+            beginTransaction()
+                .remove(it)
+                .commit()
+        }
     }
 }

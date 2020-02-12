@@ -4,52 +4,50 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
-    <TextView
-            android:id="@+id/name"
-            android:text="LIST"
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/child_container" android:id="@+id/linearLayout"
+            android:layout_marginTop="8dp" android:layout_marginStart="8dp" android:layout_marginBottom="8dp">
+        <TextView
+                android:id="@+id/name"
+                android:text="LIST"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
 
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/open_detail"
-    />
-    <Button
-            android:id="@+id/open_detail"
-            android:text="Go to Detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/name"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/add_detail"
-    />
-    <Button
-            android:id="@+id/add_detail"
-            android:text="Add Detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/open_detail"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/child_container"
-    />
+                android:textAlignment="center"/>
+        <Button
+                android:id="@+id/open_detail"
+                android:text="Go to Detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+        />
+        <Button
+                android:id="@+id/add_module"
+                android:text="Add new Module"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        />
+        <Button
+                android:id="@+id/remove_module"
+                android:text="Remove Module"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+        />
+    </LinearLayout>
     <FrameLayout
             android:id="@+id/child_container"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/add_detail"
+            android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="#05000000">
+            android:background="#05000000" app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
     </FrameLayout>
 

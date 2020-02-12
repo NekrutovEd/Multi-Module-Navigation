@@ -1,6 +1,6 @@
 package ruf.view.locationmap.navigator.list
 
-import ruf.view.locationmap.R
+import android.support.annotation.IdRes
 import ruf.view.locationmap.navigator.Navigator
 import ruf.view.locationmap.navigator.detail.DetailData
 import ruf.view.locationmap.navigator.detail.DetailModule
@@ -13,7 +13,7 @@ class ListRouter(private val navigator: Navigator) {
         navigator.forward(DetailModule(DetailData("First detail")))
     }
 
-    fun createNavigator(): Navigator {
-        return navigator.startNavigatorScope(R.id.child_container).apply { forward(ListModule()) }
+    fun createNavigator(@IdRes containerId: Int): Navigator {
+        return navigator.startNavigatorScope(containerId)
     }
 }

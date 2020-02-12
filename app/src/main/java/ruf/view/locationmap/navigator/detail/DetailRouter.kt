@@ -24,6 +24,6 @@ class DetailRouter(private val navigator: Navigator) {
     }
 
     fun closeDetail() {
-        navigator.backTo(ListModule())
+        navigator.backTo(ListModule::class)
     }
 }
