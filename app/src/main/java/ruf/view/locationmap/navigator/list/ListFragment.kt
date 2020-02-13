@@ -2,11 +2,9 @@ package ruf.view.locationmap.navigator.list
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import ruf.view.locationmap.R
 import ruf.view.locationmap.navigator.FragmentModule.Companion.injectScope
@@ -16,14 +14,7 @@ import toothpick.ktp.delegate.inject
 
 class ListFragment : Fragment(), IView {
 
-    override val manager: FragmentManager?
-        get() = childFragmentManager
-
     private val presenter: ListPresenter by inject()
-
-    companion object {
-        fun newInstance() = ListFragment()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +37,5 @@ class ListFragment : Fragment(), IView {
     override fun onDestroyView() {
         presenter.detachView()
         super.onDestroyView()
-    }
-
-    fun deleteChild() {
-        child_container.removeAllViews()
     }
 }

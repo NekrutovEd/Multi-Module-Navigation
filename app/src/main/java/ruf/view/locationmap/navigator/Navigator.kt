@@ -1,22 +1,25 @@
 package ruf.view.locationmap.navigator
 
 import android.support.annotation.IdRes
+import android.support.annotation.MainThread
 import android.support.v4.app.FragmentManager
 import java.util.*
 import kotlin.collections.HashSet
 import kotlin.reflect.KClass
 
-@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any) : INavigator<FragmentModule> {
-
+@MainThread
+class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any) : INavigator {
 
     var counter = 0
 
+    private var fragmentManager: FragmentManager? = null
 
     private val stack = Stack<FragmentModule>()
-
-    private var fragmentManager: FragmentManager? = null
     private val childNavigators = HashSet<NavigatorModule>()
+
+    override fun forwardIfEmpty(module: FragmentModule) {
+        if (stack.isEmpty()) forward(module)
+    }
 
     override fun forward(module: FragmentModule) {
         module.run {
@@ -28,36 +31,30 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
     }
 
     override fun replace(module: FragmentModule) {
-        if (!stack.empty()) stack.pop().close()
+        if (stack.isNotEmpty()) stack.popAndClose()
         forward(module)
     }
 
     override fun back(): Boolean {
-        if (stack.empty()) return false
-        stack.pop().close()
-        if (stack.empty()) return false
-        stack.peek().run {
-            installModule()
-            fragmentManager?.show(this)
-        }
+        if (stack.isEmpty()) return false
+        stack.popAndClose()
+        if (stack.isEmpty()) return false
+        fragmentManager?.show(stack.peek())
         return true
     }
 
-    override fun <K : KClass<out FragmentModule>> backTo(moduleClass: K): Boolean {
-        if (stack.empty()) return false
-        val distance = stack.search(stack.find { it::class == moduleClass })
-        if (distance <= 1) return false
+    override fun <K : KClass<out FragmentModule>> backTo(moduleClass: K): Int {
+        if (stack.isEmpty()) return -1
+        val distance = stack.search(stack.findLast { it::class == moduleClass })
+        if (distance <= 1) return 0
         for (i in 1 until distance) {
-            stack.pop().close()
+            stack.popAndClose()
         }
-        stack.peek().run {
-            installModule()
-            fragmentManager?.show(this)
-        }
-        return true
+        fragmentManager?.show(stack.peek())
+        return distance - 1
     }
 
-    override fun startNavigatorScope(@IdRes containerId: Int): Navigator {
+    override fun startNavigatorScope(containerId: Int): INavigator {
         childNavigators.find { it.containerId == containerId }
             ?.also {
                 childNavigators.remove(it)
@@ -71,11 +68,8 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
 
     override fun attachFragmentManager(fragmentManager: FragmentManager) {
         this.fragmentManager = fragmentManager
-        stack.takeUnless { it.empty() }?.peek()?.run {
+        stack.takeIf { it.isNotEmpty() }?.peek()?.run {
             fragmentManager.show(this)
-        }
-        childNavigators.forEach {
-            it.navigator.attachFragmentManager(fragmentManager)
         }
     }
 
@@ -87,14 +81,18 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
     }
 
     override fun destroy() {
-        fragmentManager = null
-        stack.forEach {
+        stack.takeIf { it.isNotEmpty() }?.forEach {
             fragmentManager?.remove(it)
             it.close()
         }
         childNavigators.forEach { it.close() }
         stack.clear()
+        fragmentManager = null
     }
+
+    inline fun <reified K : FragmentModule> backTo() = backTo(K::class)
+
+    private fun Stack<FragmentModule>.popAndClose() = pop().close()
 
     private fun FragmentManager.show(module: FragmentModule) {
         findFragmentByTag(module.scopeName) ?: run {

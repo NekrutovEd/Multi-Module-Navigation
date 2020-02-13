@@ -5,7 +5,7 @@ import toothpick.ktp.binding.bind
 
 class DetailModule(data: DetailData) : FragmentModule() {
 
-    override fun createFragment() = DetailFragment.newInstance()
+    override fun createFragment() = DetailFragment()
 
     init {
         bind<DetailData>().toInstance(data)

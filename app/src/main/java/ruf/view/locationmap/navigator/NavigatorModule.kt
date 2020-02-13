@@ -13,6 +13,7 @@ class NavigatorModule(@IdRes val containerId: Int, navigatorScopeName: Any = Any
 
     init {
         bind<Navigator>().toInstance(navigator)
+        bind<INavigatorCommand>().toInstance(navigator)
     }
 
     override fun Scope.openSubScopes(): Scope = openSubScope(ScopeIdentifier(NavigatorModule::class, scopeName))

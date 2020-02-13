@@ -4,5 +4,5 @@ import android.support.v4.app.FragmentManager
 
 interface IView {
 
-    val manager: FragmentManager?
+    fun getChildFragmentManager(): FragmentManager
 }

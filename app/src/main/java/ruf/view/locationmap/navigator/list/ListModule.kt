@@ -5,7 +5,7 @@ import toothpick.ktp.binding.bind
 
 class ListModule : FragmentModule() {
 
-    override fun createFragment() = ListFragment.newInstance()
+    override fun createFragment() = ListFragment()
 
     init {
         bind<ListRouter>().toClass<ListRouter>().singleton()

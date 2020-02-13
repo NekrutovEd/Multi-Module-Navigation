@@ -1,21 +1,25 @@
 package ruf.view.locationmap.navigator
 
-import android.support.annotation.IdRes
 import android.support.v4.app.FragmentManager
 import kotlin.reflect.KClass
 
-interface INavigator<in T> {
+interface INavigatorCommand {
 
-    fun forward(t: T)
+    fun forwardIfEmpty(module: FragmentModule)
 
-    fun replace(t: T)
+    fun forward(module: FragmentModule)
+
+    fun replace(module: FragmentModule)
 
     fun back(): Boolean
 
-    fun <K : KClass<out T>> backTo(kClassT: K): Boolean
+    /** @return | -1 = stack.empty | n = count step back | */
+    fun <K : KClass<out FragmentModule>> backTo(moduleClass: K): Int
 
-    fun startNavigatorScope(@IdRes containerId: Int): INavigator<T>
+    fun startNavigatorScope(containerId: Int): INavigator
+}
 
+interface INavigator : INavigatorCommand {
     fun attachFragmentManager(fragmentManager: FragmentManager)
 
     fun detachFragmentManager()

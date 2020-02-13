@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         NavigatorModule(R.id.container, application).installModule()
         injectNavigator(application)
-        mainNavigator.forward(ListModule())
+        mainNavigator.forwardIfEmpty(ListModule())
         mainNavigator.attachFragmentManager(supportFragmentManager)
     }
 

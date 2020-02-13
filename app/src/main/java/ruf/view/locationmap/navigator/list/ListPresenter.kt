@@ -1,9 +1,9 @@
 package ruf.view.locationmap.navigator.list
 
 import android.support.annotation.IdRes
+import ruf.view.locationmap.navigator.INavigator
 import ruf.view.locationmap.navigator.IPresenter
 import ruf.view.locationmap.navigator.IView
-import ruf.view.locationmap.navigator.Navigator
 import toothpick.InjectConstructor
 
 @InjectConstructor
@@ -13,7 +13,7 @@ class ListPresenter constructor(
 
     private var view: IView? = null
 
-    private var newNavigator: Navigator? = null
+    private var newNavigator: INavigator? = null
 
     fun openDetail() {
         router.openDetail()
@@ -21,7 +21,7 @@ class ListPresenter constructor(
 
     fun addModule(@IdRes containerId: Int) {
         newNavigator = router.createNavigator(containerId)
-        view?.manager?.also {
+        view?.getChildFragmentManager()?.also {
             newNavigator?.attachFragmentManager(it)
         }
         newNavigator?.forward(ListModule())
@@ -29,12 +29,11 @@ class ListPresenter constructor(
 
     fun removeModule() {
         newNavigator?.destroy()
-        (view as? ListFragment)?.deleteChild()
     }
 
     override fun attachView(view: IView) {
         this.view = view
-        view.manager?.also {
+        view.getChildFragmentManager().also {
             newNavigator?.attachFragmentManager(it)
         }
     }

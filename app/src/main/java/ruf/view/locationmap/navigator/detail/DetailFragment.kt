@@ -2,7 +2,6 @@ package ruf.view.locationmap.navigator.detail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +13,7 @@ import toothpick.ktp.delegate.inject
 
 class DetailFragment : Fragment(), IView {
 
-    override val manager: FragmentManager?
-        get() = childFragmentManager
-
     private val presenter: DetailPresenter by inject()
-
-    companion object {
-        fun newInstance() = DetailFragment()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
