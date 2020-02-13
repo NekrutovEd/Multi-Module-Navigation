@@ -26,6 +26,7 @@ class ListFragment : Fragment(), IView {
         view.open_detail.setOnClickListener { presenter.openDetail() }
         view.add_module.setOnClickListener { presenter.addModule(R.id.child_container) }
         view.remove_module.setOnClickListener { presenter.removeModule() }
+        view.show_dialog.setOnClickListener { presenter.showDialog() }
         return view
     }
 

@@ -54,6 +54,14 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
         return distance - 1
     }
 
+    override fun showDialog(module: DialogFragmentModule) {
+        module.run {
+            navigatorScopeName = this@Navigator.navigatorScopeName
+            installModule()
+        }
+        fragmentManager?.add(module)
+    }
+
     override fun startNavigatorScope(containerId: Int): INavigator {
         childNavigators.find { it.containerId == containerId }
             ?.also {
@@ -95,9 +103,19 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
     private fun Stack<FragmentModule>.popAndClose() = pop().close()
 
     private fun FragmentManager.show(module: FragmentModule) {
+        (module as? DialogFragmentModule)?.also { add(it) }
+            ?: findFragmentByTag(module.scopeName)
+            ?: run {
+                beginTransaction()
+                    .replace(containerId, module.fragment, module.scopeName)
+                    .commit()
+            }
+    }
+
+    private fun FragmentManager.add(module: DialogFragmentModule) {
         findFragmentByTag(module.scopeName) ?: run {
             beginTransaction()
-                .replace(containerId, module.fragment, module.scopeName)
+                .add(module.fragment, module.scopeName)
                 .commit()
         }
     }

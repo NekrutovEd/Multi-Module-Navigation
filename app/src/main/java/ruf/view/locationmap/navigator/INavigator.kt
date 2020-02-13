@@ -16,6 +16,8 @@ interface INavigatorCommand {
     /** @return | -1 = stack.empty | n = count step back | */
     fun <K : KClass<out FragmentModule>> backTo(moduleClass: K): Int
 
+    fun showDialog(module: DialogFragmentModule)
+
     fun startNavigatorScope(containerId: Int): INavigator
 }
 

@@ -27,6 +27,10 @@ class ListPresenter constructor(
         newNavigator?.forward(ListModule())
     }
 
+    fun showDialog() {
+        router.showDialog()
+    }
+
     fun removeModule() {
         newNavigator?.destroy()
     }
