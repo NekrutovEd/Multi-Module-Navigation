@@ -1,34 +1,18 @@
 package ruf.view.locationmap.sample.detail
 
-import ruf.view.locationmap.sample.IPresenter
-import ruf.view.locationmap.sample.IView
 import toothpick.InjectConstructor
 
+// Хотел данные? Получи и распишись.
 @InjectConstructor
-class DetailPresenter(
-    val data: DetailData,
-    private val router: DetailRouter
-) : IPresenter {
+class DetailPresenter(val data: DetailData, private val router: DetailRouter) {
 
-    fun addDetail() {
-        router.addDetail(data)
-    }
+    fun addDetail() = router.addDetail(data) // (forward) пошли вперед
 
-    fun replaceDetail() {
-        router.replace(data)
-    }
+    fun replaceDetail() = router.replace(data) // заменили шило на мыло
 
-    fun removeDetail() {
-        router.back()
-    }
+    fun removeDetail() = router.back() // пошли назад
 
-    fun closeDetail() {
-        router.closeDetail()
-    }
+    fun closeDetail() = router.closeDetail() // (backTo) телепортнулись назад
 
-    override fun attachView(view: IView) {
-    }
-
-    override fun detachView() {
-    }
+    // Вроде все. А в папку navigator не лезь, там не интересно -_о
 }

@@ -13,10 +13,12 @@ import toothpick.ktp.delegate.inject
 
 class DetailFragment : Fragment(), IView {
 
+    // Нужен презентер или вдруг другие зависимости(не надо других зависимостей -_-)? Окай
     private val presenter: DetailPresenter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Вызвали одну строку при старте и все получили.                                                                псс..      можно даже в onAttach, главное, чтобы после инициализации, когда arguments уже добавились.
         injectScope<DetailModule>(arguments)
     }
 
@@ -29,4 +31,6 @@ class DetailFragment : Fragment(), IView {
             close.setOnClickListener { presenter.closeDetail() }
         }
     }
+
+    //А че в DetailPresenter?
 }
