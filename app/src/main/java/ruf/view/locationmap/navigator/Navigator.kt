@@ -62,12 +62,7 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
         fragmentManager?.add(module)
     }
 
-    override fun startNavigatorScope(containerId: Int): INavigator {
-        childNavigators.find { it.containerId == containerId }
-            ?.also {
-                childNavigators.remove(it)
-                it.close()
-            }
+    override fun startNewNavigatorOn(containerId: Int): INavigator {
         val navigatorModule = NavigatorModule(containerId)
         childNavigators.add(navigatorModule)
         navigatorModule.installModule()
@@ -98,8 +93,6 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
         fragmentManager = null
     }
 
-    inline fun <reified K : FragmentModule> backTo() = backTo(K::class)
-
     private fun Stack<FragmentModule>.popAndClose() = pop().close()
 
     private fun FragmentManager.show(module: FragmentModule) {
@@ -107,16 +100,16 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
             ?: findFragmentByTag(module.scopeName)
             ?: run {
                 beginTransaction()
-                    .replace(containerId, module.fragment, module.scopeName)
-                    .commit()
+                    .replace(containerId, module.createFragment(), module.scopeName)
+                    .commitNow()
             }
     }
 
     private fun FragmentManager.add(module: DialogFragmentModule) {
         findFragmentByTag(module.scopeName) ?: run {
             beginTransaction()
-                .add(module.fragment, module.scopeName)
-                .commit()
+                .add(module.createFragment(), module.scopeName)
+                .commitNow()
         }
     }
 
@@ -124,7 +117,7 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
         findFragmentByTag(module.scopeName)?.also {
             beginTransaction()
                 .remove(it)
-                .commit()
+                .commitNow()
         }
     }
 }

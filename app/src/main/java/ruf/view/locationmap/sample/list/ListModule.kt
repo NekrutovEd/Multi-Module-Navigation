@@ -1,11 +1,9 @@
-package ruf.view.locationmap.navigator.list
+package ruf.view.locationmap.sample.list
 
 import ruf.view.locationmap.navigator.FragmentModule
 import toothpick.ktp.binding.bind
 
-class ListModule : FragmentModule() {
-
-    override fun createFragment() = ListFragment()
+class ListModule : FragmentModule(ListFragment::class) {
 
     init {
         bind<ListRouter>().toClass<ListRouter>().singleton()

@@ -1,8 +1,8 @@
-package ruf.view.locationmap
+package ruf.view.locationmap.sample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-
+import ruf.view.locationmap.R
 
 class MainActivity : AppCompatActivity() {
 

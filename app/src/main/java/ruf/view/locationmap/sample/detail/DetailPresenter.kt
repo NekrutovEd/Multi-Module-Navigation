@@ -1,7 +1,7 @@
-package ruf.view.locationmap.navigator.detail
+package ruf.view.locationmap.sample.detail
 
-import ruf.view.locationmap.navigator.IPresenter
-import ruf.view.locationmap.navigator.IView
+import ruf.view.locationmap.sample.IPresenter
+import ruf.view.locationmap.sample.IView
 import toothpick.InjectConstructor
 
 @InjectConstructor

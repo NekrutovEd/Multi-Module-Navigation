@@ -11,7 +11,7 @@
             android:fullBackupContent="@xml/backup_descriptor">
 
         <activity
-                android:name=".MainActivity"
+                android:name=".sample.MainActivity"
                 android:screenOrientation="fullSensor"
                 android:label="@string/title_activity_maps">
             <intent-filter>

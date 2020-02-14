@@ -1,4 +1,4 @@
-package ruf.view.locationmap.navigator
+package ruf.view.locationmap.sample
 
 interface IPresenter {
 

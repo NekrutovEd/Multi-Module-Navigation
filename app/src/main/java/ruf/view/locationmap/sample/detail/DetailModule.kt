@@ -1,11 +1,9 @@
-package ruf.view.locationmap.navigator.detail
+package ruf.view.locationmap.sample.detail
 
 import ruf.view.locationmap.navigator.FragmentModule
 import toothpick.ktp.binding.bind
 
-class DetailModule(data: DetailData) : FragmentModule() {
-
-    override fun createFragment() = DetailFragment()
+class DetailModule(data: DetailData) : FragmentModule(DetailFragment::class) {
 
     init {
         bind<DetailData>().toInstance(data)

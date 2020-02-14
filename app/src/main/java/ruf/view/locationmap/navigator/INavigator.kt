@@ -18,13 +18,16 @@ interface INavigatorCommand {
 
     fun showDialog(module: DialogFragmentModule)
 
-    fun startNavigatorScope(containerId: Int): INavigator
+    fun startNewNavigatorOn(containerId: Int): INavigator
 }
 
 interface INavigator : INavigatorCommand {
+
     fun attachFragmentManager(fragmentManager: FragmentManager)
 
     fun detachFragmentManager()
 
     fun destroy()
 }
+
+inline fun <reified K : FragmentModule> INavigatorCommand.backTo() = backTo(K::class)
