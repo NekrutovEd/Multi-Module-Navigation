@@ -29,14 +29,6 @@ abstract class FragmentModule(private val fragment: KClass<out Fragment>) : Scop
             .openSubScope(ScopeIdentifier(this@FragmentModule::class, scopeName))
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        return true
-    }
-
-    override fun hashCode() = javaClass.hashCode()
-
     companion object {
         inline fun <reified SM : FragmentModule> Any.injectScope(arguments: Bundle?) {
             this.injectScope<SM>(arguments?.getString(INDIVIDUALITY) ?: "")
