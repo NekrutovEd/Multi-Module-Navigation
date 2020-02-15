@@ -2,6 +2,7 @@ package ruf.view.locationmap.navigator
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import toothpick.Scope
 import java.util.*
 import kotlin.reflect.KClass
@@ -15,6 +16,8 @@ abstract class FragmentModule(private val fragment: Class<out Fragment>) : Scope
     override val scopeName = UUID.randomUUID().toString()
 
     var navigatorScopeName: Any = Any()
+
+    open fun customizeTransactionsWithModule(transaction: FragmentTransaction): FragmentTransaction = transaction
 
     fun createFragment(): Fragment = fragment.newInstance().also {
         val arguments = it.arguments ?: Bundle()

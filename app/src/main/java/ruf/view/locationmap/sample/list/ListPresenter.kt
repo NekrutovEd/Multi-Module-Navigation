@@ -1,6 +1,7 @@
 package ruf.view.locationmap.sample.list
 
 import android.support.annotation.IdRes
+import ruf.view.locationmap.R
 import ruf.view.locationmap.navigator.INavigator
 import ruf.view.locationmap.sample.IPresenter
 import ruf.view.locationmap.sample.IView
@@ -40,7 +41,10 @@ class ListPresenter(private val router: ListRouter) : IPresenter {
 
         // Заменяем его текущий модуль на новый ListModule.
         // Если навигатор будет пустой, то новый модуль просто добавится первым в стеке.
-        newNavigator?.replace(ListModule())
+        newNavigator?.replace {
+            setCustomAnimations(R.anim.first_list_enter, R.anim.first_list_exit)
+            ListModule()
+        }
 
         // Если хотим, чтобы наш навигатор отразил стое состояние на containerId, то стоит передать ему FragmentManager
         view?.getChildFragmentManager()?.also {

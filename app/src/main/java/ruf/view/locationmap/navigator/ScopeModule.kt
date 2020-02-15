@@ -9,10 +9,6 @@ abstract class ScopeModule : Module() {
 
     abstract val scopeName: Any
 
-    protected abstract fun Scope.openSubScopes(): Scope
-
-    protected open fun onCloseScope() {}
-
     fun installModule() {
         KTP.openRootScope().openSubScopes().installModules(this)
     }
@@ -23,6 +19,10 @@ abstract class ScopeModule : Module() {
         KTP.closeScope(ScopeIdentifier(this::class, scopeName))
         onCloseScope()
     }
+
+    protected abstract fun Scope.openSubScopes(): Scope
+
+    protected open fun onCloseScope() {}
 
     protected data class ScopeIdentifier(
         private val moduleClass: KClass<out ScopeModule>,

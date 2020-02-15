@@ -5,18 +5,18 @@ import kotlin.reflect.KClass
 
 interface INavigatorCommand {
 
-    fun forwardIfEmpty(module: FragmentModule)
+    fun forwardIfEmpty(getModule: ICustomizationCommand.() -> FragmentModule)
 
-    fun forward(module: FragmentModule)
+    fun forward(getModule: ICustomizationCommand.() -> FragmentModule)
 
-    fun replace(module: FragmentModule)
+    fun replace(getModule: ICustomizationCommand.() -> FragmentModule)
 
-    fun back(): Boolean
+    fun back(customization: ICustomizationCommand.() -> Unit = {}): Boolean
 
     /** @return | -1 = stack.empty | n = count step back | */
-    fun <K : KClass<out FragmentModule>> backTo(moduleClass: K): Int
+    fun backTo(getModule: ICustomizationCommand.() -> KClass<out FragmentModule>): Int
 
-    fun showDialog(module: DialogFragmentModule)
+    fun showDialog(getModule: ICustomizationCommand.() -> DialogFragmentModule)
 
     fun startNewNavigatorOn(containerId: Int): INavigator
 }
@@ -30,4 +30,9 @@ interface INavigator : INavigatorCommand {
     fun destroy()
 }
 
-inline fun <reified K : FragmentModule> INavigatorCommand.backTo() = backTo(K::class)
+inline fun <reified K : FragmentModule> INavigatorCommand.backTo(
+    crossinline customization: ICustomizationCommand.() -> Unit = {}
+) = backTo {
+        this.customization()
+        K::class
+    }

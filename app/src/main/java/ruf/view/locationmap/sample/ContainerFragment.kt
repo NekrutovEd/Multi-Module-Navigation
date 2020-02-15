@@ -41,7 +41,12 @@ class ContainerFragment : Fragment() {
         injectNavigator(ContainerFragment::class)
 
         // Если в навигаторе нету других модулей, тогда кладем в стек ListModule
-        mainNavigator.forwardIfEmpty(ListModule())
+        // В передаваемой лямбде, контекстом(this) является реализация интерфейса ICustomizationCommand.
+        // Этот инерфейс позволяется задать необхотимые параметры для данной команды. Например собственную анимацию.
+        mainNavigator.forwardIfEmpty {
+            setCustomAnimations(R.anim.first_list_enter, R.anim.first_list_exit)
+            ListModule()
+        }
 
         // Привязываем к навигатору FragmentManager, чтобы он мог отображать модули.
         // При привязке, он отобразит свое текущее состояние.
