@@ -1,5 +1,6 @@
 package ruf.view.locationmap.navigator
 
+import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import kotlin.reflect.KClass
 
@@ -17,11 +18,15 @@ interface INavigatorCommand {
     fun backTo(getModule: ICustomizationCommand.() -> KClass<out FragmentModule>): Int
 
     fun showDialog(getModule: ICustomizationCommand.() -> DialogFragmentModule)
-
-    fun startNewNavigatorOn(containerId: Int): INavigator
 }
 
-interface INavigator : INavigatorCommand {
+interface INavigatorLifeCycle {
+
+    fun forwardIfEmpty(getModule: ICustomizationCommand.() -> FragmentModule)
+
+    fun onSaveInstanceState(outState: Bundle)
+
+    fun onViewStateRestored(savedInstanceState: Bundle?)
 
     fun attachFragmentManager(fragmentManager: FragmentManager)
 
@@ -29,6 +34,8 @@ interface INavigator : INavigatorCommand {
 
     fun destroy()
 }
+
+interface INavigator: INavigatorLifeCycle, INavigatorCommand
 
 inline fun <reified K : FragmentModule> INavigatorCommand.backTo(
     crossinline customization: ICustomizationCommand.() -> Unit = {}

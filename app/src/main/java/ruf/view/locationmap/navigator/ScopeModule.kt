@@ -24,7 +24,7 @@ abstract class ScopeModule : Module() {
 
     protected open fun onCloseScope() {}
 
-    protected data class ScopeIdentifier(
+    data class ScopeIdentifier(
         private val moduleClass: KClass<out ScopeModule>,
         private val scopeName: Any
     )

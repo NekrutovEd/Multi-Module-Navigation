@@ -13,4 +13,9 @@ class CustomizationCommand : ICustomizationCommand {
         customList.add { setCustomAnimations(enter, exit) }
         return this
     }
+
+    override fun setCustomAnimations(enter: Int, exit: Int, popEnter: Int, popExit: Int): ICustomizationCommand {
+        customList.add { setCustomAnimations(enter, exit, popEnter, popExit) }
+        return this
+    }
 }

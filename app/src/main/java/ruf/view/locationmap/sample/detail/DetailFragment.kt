@@ -17,9 +17,9 @@ class DetailFragment : Fragment(), IView {
     private val presenter: DetailPresenter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         // Вызвали одну строку при старте и все получили.                                                                псс..      можно даже в onAttach, главное, чтобы после инициализации, когда arguments уже добавились.
         injectScope<DetailModule>(arguments)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

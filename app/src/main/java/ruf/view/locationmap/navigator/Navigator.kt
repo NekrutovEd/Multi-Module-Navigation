@@ -1,35 +1,64 @@
 package ruf.view.locationmap.navigator
 
+import android.os.Bundle
 import android.support.annotation.IdRes
-import android.support.annotation.MainThread
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import ruf.view.locationmap.sample.log
 import java.util.*
-import kotlin.collections.HashSet
 import kotlin.reflect.KClass
 
-@MainThread
-class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any) : INavigator {
+class Navigator(
+    @IdRes private val containerId: Int,
+    private val navigatorScopeName: String/*,
+    savedInstanceState: Bundle?*/
+) : INavigator {
 
     var counter = 0
 
     private var fragmentManager: FragmentManager? = null
 
-    private val stack = Stack<Pair<FragmentModule, CustomizationCommand>>()
-    private val childNavigators = HashSet<NavigatorModule>()
+    private val stack = Stack<FragmentModule>()
+
+//    private val childNavigators = HashSet<NavigatorModule>()
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        counter = savedInstanceState?.getInt(INDIVIDUALITY + "COUNTER") ?: counter
+        savedInstanceState?.getParcelableArrayList<FragmentModule>(INDIVIDUALITY + "LIST")?.let { savedList ->
+            savedList.takeIf { it.isNotEmpty() }
+                ?.also {
+                    stack.clear()
+                    stack.addAll(it)
+                    stack.peek()?.also { module ->
+                        module.navigatorScopeName = navigatorScopeName
+                        module.installModule()
+                    }
+                }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        log("onSaveInstanceStateNavigator start $outState")
+        outState.putInt(INDIVIDUALITY + "COUNTER", counter)
+        outState.putParcelableArrayList(INDIVIDUALITY + "LIST", ArrayList(stack))
+        log("onSaveInstanceStateNavigator finish $outState")
+    }
 
     override fun forwardIfEmpty(getModule: ICustomizationCommand.() -> FragmentModule) {
+        log("forwardIfEmpty $stack")
         if (stack.isEmpty()) forward(getModule)
     }
 
     override fun forward(getModule: ICustomizationCommand.() -> FragmentModule) {
+        log("forward $stack")
         val customizationCommand = CustomizationCommand()
         getModule(customizationCommand).run {
-            stack.push(this to customizationCommand)
+            stack.push(this)
             navigatorScopeName = this@Navigator.navigatorScopeName
             installModule()
             fragmentManager?.show(this, customizationCommand)
         }
+        log("forward finish $stack")
     }
 
     override fun replace(getModule: ICustomizationCommand.() -> FragmentModule) {
@@ -43,7 +72,8 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
         stack.popAndClose()
         if (stack.isEmpty()) return false
         customization(customizationCommand)
-        fragmentManager?.show(stack.peek().first, customizationCommand)
+        fragmentManager?.popBackStack()
+//        fragmentManager?.show(stack.peek(), customizationCommand)
         return true
     }
 
@@ -55,7 +85,7 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
         for (i in 1 until distance) {
             stack.popAndClose()
         }
-        fragmentManager?.show(stack.peek().first, customizationCommand)
+        fragmentManager?.show(stack.peek(), customizationCommand)
         return distance - 1
     }
 
@@ -68,38 +98,42 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
         }
     }
 
-    override fun startNewNavigatorOn(containerId: Int): INavigator {
-        val navigatorModule = NavigatorModule(containerId)
-        childNavigators.add(navigatorModule)
-        navigatorModule.installModule()
-        return navigatorModule.navigator
-    }
+//    override fun startNewNavigatorOn(containerId: Int, arguments: Bundle?): INavigator {
+//        log("startNewNavigatorOn")
+//        val navigatorModule = NavigatorModule(containerId, arguments, null)
+////        childNavigators.add(navigatorModule)
+//        navigatorModule.installModule()
+//        return navigatorModule.navigator
+//    }
 
     override fun attachFragmentManager(fragmentManager: FragmentManager) {
+        log("attachFragmentManager $fragmentManager")
         this.fragmentManager = fragmentManager
         stack.takeIf { it.isNotEmpty() }?.peek()?.run {
-            fragmentManager.show(first, second)
+            fragmentManager.show(this, null)
         }
     }
 
     override fun detachFragmentManager() {
+        log("detachFragmentManager $fragmentManager")
         fragmentManager = null
-        childNavigators.forEach {
-            it.navigator.detachFragmentManager()
-        }
+//        childNavigators.forEach {
+//            it.navigator.detachFragmentManager()
+//        }
     }
 
     override fun destroy() {
+        log("destroy $stack")
         stack.takeIf { it.isNotEmpty() }?.forEach {
-            fragmentManager?.remove(it.first, it.second)
-            it.first.close()
+            fragmentManager?.remove(it)
+            it.close()
         }
-        childNavigators.forEach { it.close() }
+//        childNavigators.forEach { it.close() }
         stack.clear()
         fragmentManager = null
     }
 
-    private fun Stack<Pair<FragmentModule, CustomizationCommand>>.popAndClose() = pop().first.close()
+    private fun Stack<FragmentModule>.popAndClose() = pop().close()
 
     private fun FragmentManager.show(module: FragmentModule, customization: CustomizationCommand?) {
         (module as? DialogFragmentModule)?.also { add(it, customization) }
@@ -108,7 +142,8 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
                 beginTransaction()
                     .customizeTransaction(customization)
                     .replace(containerId, module.createFragment(), module.scopeName)
-                    .commitNow()
+                    .addToBackStack(module.scopeName)
+                    .commit()
             }
     }
 
@@ -117,16 +152,16 @@ class Navigator(@IdRes private val containerId: Int, val navigatorScopeName: Any
             beginTransaction()
                 .customizeTransaction(customization)
                 .add(module.createFragment(), module.scopeName)
-                .commitNow()
+                .addToBackStack(module.scopeName)
+                .commit()
         }
     }
 
-    private fun FragmentManager.remove(module: FragmentModule, customization: CustomizationCommand?) {
+    private fun FragmentManager.remove(module: FragmentModule) {
         findFragmentByTag(module.scopeName)?.also {
             beginTransaction()
-                .customizeTransaction(customization)
                 .remove(it)
-                .commitNow()
+                .commit()
         }
     }
 
