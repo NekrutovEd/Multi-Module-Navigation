@@ -1,7 +1,9 @@
 package ruf.view.locationmap.sample.dialog
 
 import kotlinx.android.parcel.Parcelize
-import ruf.view.locationmap.navigator.DialogFragmentModule
+import ruf.view.locationmap.library.module.DialogFragmentModule
+import java.util.*
 
 @Parcelize
-class ExampleDialogModule : DialogFragmentModule(ExampleDialogFragment::class)
+class ExampleDialogModule(override val scopeName: String = UUID.randomUUID().toString()) :
+    DialogFragmentModule(ExampleDialogFragment::class)

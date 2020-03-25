@@ -1,8 +1,8 @@
 package ruf.view.locationmap.sample.detail
 
-import ruf.view.locationmap.navigator.INavigatorCommand
-import ruf.view.locationmap.navigator.Navigator
-import ruf.view.locationmap.navigator.backTo
+import ruf.view.locationmap.library.navigator.INavigatorCommand
+import ruf.view.locationmap.library.navigator.Navigator
+import ruf.view.locationmap.library.navigator.backTo
 import ruf.view.locationmap.sample.ParentNavigator
 import ruf.view.locationmap.sample.list.ListModule
 import toothpick.InjectConstructor

@@ -1,23 +1,23 @@
 package ruf.view.locationmap.sample.detail
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import ruf.view.locationmap.R
-import ruf.view.locationmap.navigator.FragmentModule.Companion.injectScope
+import ruf.view.locationmap.library.module.FragmentModule.Companion.injectScope
 import ruf.view.locationmap.sample.IView
+import ruf.view.locationmap.sample.LogFragment
 import toothpick.ktp.delegate.inject
 
-class DetailFragment : Fragment(), IView {
+class DetailFragment : LogFragment(), IView {
 
-    // Нужен презентер или вдруг другие зависимости(не надо других зависимостей -_-)? Окай
+    override var logTag: String = "DetailFragment"
+
     private val presenter: DetailPresenter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Вызвали одну строку при старте и все получили.                                                                псс..      можно даже в onAttach, главное, чтобы после инициализации, когда arguments уже добавились.
         injectScope<DetailModule>(arguments)
         super.onCreate(savedInstanceState)
     }
@@ -31,6 +31,4 @@ class DetailFragment : Fragment(), IView {
             close.setOnClickListener { presenter.closeDetail() }
         }
     }
-
-    //А че в DetailPresenter?
 }

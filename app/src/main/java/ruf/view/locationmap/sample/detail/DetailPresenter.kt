@@ -6,13 +6,11 @@ import toothpick.InjectConstructor
 @InjectConstructor
 class DetailPresenter(val data: DetailData, private val router: DetailRouter) {
 
-    fun addDetail() = router.addDetail(data) // (forward) пошли вперед
+    fun addDetail() = router.addDetail(data)
 
-    fun replaceDetail() = router.replace(data) // заменили шило на мыло
+    fun replaceDetail() = router.replace(data)
 
-    fun removeDetail() = router.back() // пошли назад
+    fun removeDetail() = router.back()
 
-    fun closeDetail() = router.closeDetail() // (backTo) телепортнулись назад
-
-    // Вроде все. А в папку navigator не лезь, там не интересно -_о
+    fun closeDetail() = router.closeDetail()
 }

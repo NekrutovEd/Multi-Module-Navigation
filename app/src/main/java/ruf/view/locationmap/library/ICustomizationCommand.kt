@@ -1,4 +1,4 @@
-package ruf.view.locationmap.navigator
+package ruf.view.locationmap.library
 
 import android.support.annotation.AnimRes
 import android.support.annotation.AnimatorRes

@@ -4,31 +4,27 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import ruf.view.locationmap.R
+import ruf.view.locationmap.library.IOnBackPressed
 
-// Навигация создана для Fragment и подходит когда делают SingleActivity или несколько базовых Activity.
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
 
-        // Activity является контейнером.
-        // Стартовать навигацию можно где угодно.
-        // Добавляем на нее фрагмент в виде контейнера, чтобы на нем стартануть навигацию.
-        // ContainerFragment сделан для примера, что можно сделать старт навигации локальной фичи не затрагивая всего остального приложения.
-        supportFragmentManager.findFragmentByTag("ContainerFragment")
+        supportFragmentManager.findFragmentByTag(TAG_CONTAINER)
             ?: supportFragmentManager.beginTransaction()
-                .replace(R.id.container, ContainerFragment.newInstance(), "ContainerFragment")
-                .addToBackStack("ContainerFragment")
+                .replace(R.id.container, ContainerFragment(), TAG_CONTAINER)
+                .addToBackStack(TAG_CONTAINER)
                 .commit()
-
-        // Далее идем в ContainerFragment
     }
 
     override fun onBackPressed() {
-        supportFragmentManager.findFragmentByTag("ContainerFragment")?.childFragmentManager?.popBackStack()
+        val fragment = supportFragmentManager.findFragmentByTag(TAG_CONTAINER) as? IOnBackPressed
+        if (fragment?.onBackPressed() == false) finish()
     }
 }
 
+private const val TAG_CONTAINER = "ContainerFragment"
 
 fun log(string: String) = Log.i("NAVIGATOR", string)

@@ -1,4 +1,4 @@
-package ruf.view.locationmap.navigator
+package ruf.view.locationmap.library
 
 import android.support.v4.app.FragmentTransaction
 import java.util.*

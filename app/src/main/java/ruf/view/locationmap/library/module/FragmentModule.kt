@@ -1,13 +1,11 @@
-package ruf.view.locationmap.navigator
+package ruf.view.locationmap.library.module
 
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.IgnoredOnParcel
 import toothpick.Scope
-import java.util.*
 import kotlin.reflect.KClass
 
 const val INDIVIDUALITY = "INDIVIDUALITY"
@@ -16,8 +14,7 @@ abstract class FragmentModule(private val fragment: Class<out Fragment>) : Scope
 
     constructor(fragment: KClass<out Fragment>) : this(fragment.java)
 
-    @SerializedName("scopeName")
-    override var scopeName = UUID.randomUUID().toString()
+    abstract override val scopeName: String
 
     @IgnoredOnParcel
     lateinit var navigatorScopeName: String

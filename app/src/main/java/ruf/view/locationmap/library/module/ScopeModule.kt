@@ -1,4 +1,4 @@
-package ruf.view.locationmap.navigator
+package ruf.view.locationmap.library.module
 
 import toothpick.Scope
 import toothpick.config.Module
@@ -15,14 +15,10 @@ abstract class ScopeModule : Module() {
 
     fun isOpen() = KTP.isScopeOpen(ScopeIdentifier(this::class, scopeName))
 
-    fun close() {
-        KTP.closeScope(ScopeIdentifier(this::class, scopeName))
-        onCloseScope()
-    }
+    fun close() = KTP.closeScope(ScopeIdentifier(this::class, scopeName))
 
     protected abstract fun Scope.openSubScopes(): Scope
 
-    protected open fun onCloseScope() {}
 
     data class ScopeIdentifier(
         private val moduleClass: KClass<out ScopeModule>,

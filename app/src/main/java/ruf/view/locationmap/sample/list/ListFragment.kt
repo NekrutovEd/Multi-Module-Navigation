@@ -1,74 +1,63 @@
 package ruf.view.locationmap.sample.list
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import ruf.view.locationmap.R
-import ruf.view.locationmap.navigator.FragmentModule.Companion.injectScope
-import ruf.view.locationmap.navigator.INavigatorLifeCycle
-import ruf.view.locationmap.navigator.NavigatorProvider
+import ruf.view.locationmap.library.IOnBackPressed
+import ruf.view.locationmap.library.module.FragmentModule.Companion.injectScope
+import ruf.view.locationmap.library.module.NavigatorProvider
+import ruf.view.locationmap.library.navigator.INavigatorLifeCycle
 import ruf.view.locationmap.sample.IView
 import ruf.view.locationmap.sample.ListNavigator
+import ruf.view.locationmap.sample.LogFragment
 import toothpick.InjectConstructor
 import toothpick.ktp.delegate.inject
 
 
-class ListFragment : Fragment(), IView {
+class ListFragment : LogFragment(), IView, IOnBackPressed {
 
-    // Делаем зависимость от Presenter (Все зависимости стоит делать через интерфейсы, а не на прямую как тут)
+    override var logTag: String = "LIST ?"
+
     private val presenter: ListPresenter by inject()
 
     private val navigator: INavigatorLifeCycle by inject(ListNavigator::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        NavigatorModule(R.id.child_container, arguments, savedInstanceState).installModule()
-
-
-        // Данной строкой инжектим скоуп модуля к Fragment.
-        // arguments уже содержит необходимые для этого данные.
-        // Никаких newInstance у фрагмента не нужно. Работать с arguments можно, но не нужно.
-        injectScope<ListModule>(arguments)
-
+;        injectScope<ListModule>(arguments)
         super.onCreate(savedInstanceState)
-
-        // Инжектим навигатор модуль(содержит только навигатор) на вызванный объект(this.injectNavigator(...)) с помощью его уникального идентификатора.
-//        injectNavigator(arguments)
-
-//        presenter.injectNavigator(arguments)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false).apply {
+            val text = name.text.toString() + presenter.data.tag
+            logTag = text
+            name.text = text
             open_detail.setOnClickListener { presenter.openDetail() }
             add_module.setOnClickListener { presenter.addModule() }
-            remove_module.setOnClickListener { navigator.destroy() }
+            remove_module.setOnClickListener { presenter.removeModule() }
             show_dialog.setOnClickListener { presenter.showDialog() }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Привязываемся к презентору для работы
         presenter.attachView(this)
     }
 
-    override fun onResume() {
+    override fun onStart() {
+        super.onStart()
         navigator.attachFragmentManager(childFragmentManager)
-        super.onResume()
     }
 
-    override fun onPause() {
-        super.onPause()
-        // Отвязываем FragmentManager, т.к. он протухает.
-        // Навигатор остается жив и поддерживает работу с ним.
+    override fun onStop() {
         navigator.detachFragmentManager()
+        super.onStop()
     }
 
     override fun onDestroyView() {
-        // Отвязываемся, чтобы презентор не общался с пустотой. Гиблое это дело, общаться с пустотой.
         presenter.detachView()
         super.onDestroyView()
     }
@@ -79,12 +68,12 @@ class ListFragment : Fragment(), IView {
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
         navigator.onViewStateRestored(savedInstanceState)
+        super.onViewStateRestored(savedInstanceState)
     }
 
-    @InjectConstructor
-    class ListNavigatorProvider : NavigatorProvider(R.id.child_container)
+    override fun onBackPressed() = navigator.onBackPressed()
 
-    // Двигаем в ListPresenter
+    @InjectConstructor
+    class ListNavigatorProvider : NavigatorProvider(R.id.child_container, null)
 }

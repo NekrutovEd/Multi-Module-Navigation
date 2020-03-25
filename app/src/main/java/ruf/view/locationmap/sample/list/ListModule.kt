@@ -1,19 +1,18 @@
 package ruf.view.locationmap.sample.list
 
 import kotlinx.android.parcel.Parcelize
-import ruf.view.locationmap.navigator.FragmentModule
-import ruf.view.locationmap.navigator.INavigatorCommand
-import ruf.view.locationmap.navigator.INavigatorLifeCycle
+import ruf.view.locationmap.library.module.FragmentModule
+import ruf.view.locationmap.library.navigator.INavigatorCommand
+import ruf.view.locationmap.library.navigator.INavigatorLifeCycle
 import ruf.view.locationmap.sample.ListNavigator
 import toothpick.Scope
 import toothpick.ktp.binding.bind
+import java.util.*
 
-// Наследуем FragmentModule и передаем ему в параметр класс стартового фрагмента.
 @Parcelize
-class ListModule : FragmentModule(ListFragment::class) {
+data class ListModule(private val tag: String, override val scopeName: String = UUID.randomUUID().toString()) :
+    FragmentModule(ListFragment::class) {
 
-
-    // Прописываем все необходимые зависимости(обычный модуль DI)
     init {
         val provider = ListFragment.ListNavigatorProvider()
 
@@ -21,13 +20,11 @@ class ListModule : FragmentModule(ListFragment::class) {
         bind<INavigatorCommand>().withName(ListNavigator::class).toProviderInstance(provider)
         bind<ListRouter>().toClass<ListRouter>().singleton()
         bind<ListPresenter>().toClass<ListPresenter>().singleton()
+        bind<ListData>().toInstance(ListData(tag))
     }
 
-    // Обычно мы еще от чего нибудь зависим, например RepositoryModule или ApiModule.
-    // Не вопрос. Переопределяем openDependentScopes и добавляем в иерархию все необходимое.
     override fun Scope.openDependentScopes(): Scope = this
     /*.openSubScope(RepositoryModule::class)*/
     /*.openSubScope(ApiModule::class)*/
 
-    // И идем в ListFragment
 }
