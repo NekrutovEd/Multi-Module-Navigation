@@ -13,8 +13,6 @@ import toothpick.ktp.delegate.inject
 
 class DetailFragment : LogFragment(), IView {
 
-    override var logTag: String = "DetailFragment"
-
     private val presenter: DetailPresenter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {

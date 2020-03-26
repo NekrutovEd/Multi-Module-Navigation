@@ -2,8 +2,9 @@ package ruf.view.locationmap.library.navigator
 
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
+import ruf.view.locationmap.library.IOnBackPressed
 
-interface INavigatorLifeCycle {
+interface INavigatorLifeCycle : IOnBackPressed {
 
     fun attachFragmentManager(fragmentManager: FragmentManager)
 
@@ -12,6 +13,4 @@ interface INavigatorLifeCycle {
     fun onSaveInstanceState(outState: Bundle)
 
     fun onViewStateRestored(savedInstanceState: Bundle?)
-
-    fun onBackPressed(): Boolean
 }

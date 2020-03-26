@@ -10,7 +10,7 @@ import android.view.*
 
 abstract class LogFragment : Fragment() {
 
-    abstract var logTag: String
+    protected var logTag: String = this::class.java.name
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         log("$logTag onCreateContextMenu")

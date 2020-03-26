@@ -19,21 +19,19 @@ import toothpick.ktp.delegate.inject
 
 class ListFragment : LogFragment(), IView, IOnBackPressed {
 
-    override var logTag: String = "LIST ?"
-
     private val presenter: ListPresenter by inject()
 
     private val navigator: INavigatorLifeCycle by inject(ListNavigator::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-;        injectScope<ListModule>(arguments)
+        injectScope<ListModule>(arguments)
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false).apply {
             val text = name.text.toString() + presenter.data.tag
-            logTag = text
+            logTag += presenter.data.tag
             name.text = text
             open_detail.setOnClickListener { presenter.openDetail() }
             add_module.setOnClickListener { presenter.addModule() }

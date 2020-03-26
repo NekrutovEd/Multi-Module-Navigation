@@ -12,8 +12,6 @@ import ruf.view.locationmap.sample.list.ListModule
 
 class ContainerFragment : LogFragment(), IOnBackPressed {
 
-    override var logTag: String = "ContainerFragment"
-
     private val mainNavigator: INavigatorLifeCycle by lazy { RootNavigatorProvider().get() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
