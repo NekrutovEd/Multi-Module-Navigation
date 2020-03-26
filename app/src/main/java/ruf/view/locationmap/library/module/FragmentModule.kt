@@ -29,6 +29,12 @@ abstract class FragmentModule(private val fragment: Class<out Fragment>) : Scope
 
     protected open fun Scope.openDependentScopes(): Scope = this
 
+    protected fun Scope.installAndOpenSharedScope(sharedModule: SharedModule): Scope {
+        sharedModule.navigatorScopeName = navigatorScopeName
+        sharedModule.installModule()
+        return openSubScope(sharedModule.scopeName)
+    }
+
     final override fun Scope.openSubScopes(): Scope {
         return openSubScope(ScopeIdentifier(NavigatorModule::class, navigatorScopeName))
             .openDependentScopes()

@@ -15,10 +15,14 @@ abstract class ScopeModule : Module() {
 
     fun isOpen() = KTP.isScopeOpen(ScopeIdentifier(this::class, scopeName))
 
-    fun close() = KTP.closeScope(ScopeIdentifier(this::class, scopeName))
+    fun close() {
+        KTP.closeScope(ScopeIdentifier(this::class, scopeName))
+        onCloseScope()
+    }
 
     protected abstract fun Scope.openSubScopes(): Scope
 
+    protected open fun onCloseScope() {}
 
     data class ScopeIdentifier(
         private val moduleClass: KClass<out ScopeModule>,

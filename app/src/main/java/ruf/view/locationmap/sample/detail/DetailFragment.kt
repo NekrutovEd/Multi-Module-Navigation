@@ -22,7 +22,8 @@ class DetailFragment : LogFragment(), IView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_detail, container, false).apply {
-            name.text = presenter.data.text
+            val text = "${presenter.listData.tag} ${presenter.data.text}"
+            name.text = text
             add.setOnClickListener { presenter.addDetail() }
             replace.setOnClickListener { presenter.replaceDetail() }
             delete.setOnClickListener { presenter.removeDetail() }

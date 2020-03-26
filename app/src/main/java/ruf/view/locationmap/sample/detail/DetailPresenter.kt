@@ -1,10 +1,14 @@
 package ruf.view.locationmap.sample.detail
 
+import ruf.view.locationmap.sample.list.ListData
 import toothpick.InjectConstructor
 
-// Хотел данные? Получи и распишись.
 @InjectConstructor
-class DetailPresenter(val data: DetailData, private val router: DetailRouter) {
+class DetailPresenter(
+    val data: DetailData,
+    val listData: ListData,
+    private val router: DetailRouter
+) {
 
     fun addDetail() = router.addDetail(data)
 
