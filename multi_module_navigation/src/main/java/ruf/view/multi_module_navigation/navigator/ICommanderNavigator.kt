@@ -6,7 +6,7 @@ import ruf.view.multi_module_navigation.module.DialogFragmentModule
 import ruf.view.multi_module_navigation.module.FragmentModule
 import kotlin.reflect.KClass
 
-interface INavigatorCommand : ICommandExecutor {
+interface ICommanderNavigator : ICommandExecutor {
 
     fun forward(getModule: ICustomizationCommand.() -> FragmentModule) =
         execute(ForwardCommand(getModule))
@@ -24,4 +24,4 @@ interface INavigatorCommand : ICommandExecutor {
         execute(ShowDialogCommand(getDialogModule))
 }
 
-inline fun <reified K : FragmentModule> INavigatorCommand.backTo() = backTo(K::class)
+inline fun <reified K : FragmentModule> ICommanderNavigator.backTo() = backTo(K::class)

@@ -1,4 +1,4 @@
-package ruf.view.locationmap.sample.dialog
+package ruf.view.feature_dialog
 
 import android.Manifest
 import android.app.Activity
@@ -25,7 +25,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 
-class ExampleDialogFragment : DialogFragment(), IView {
+internal class ExampleDialogFragment : DialogFragment(), IView {
 
     private val presenter: ExampleDialogPresenter by inject()
 
@@ -38,7 +38,7 @@ class ExampleDialogFragment : DialogFragment(), IView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(ruf.view.locationmap.R.layout.dialog_fragment, container, false).apply {
+        inflater.inflate(R.layout.dialog_fragment, container, false).apply {
             share.setOnClickListener { presenter.share() }
             share.isEnabled = false
             requestPermissions(
@@ -133,7 +133,7 @@ class ExampleDialogFragment : DialogFragment(), IView {
         imageView ?: return
         Picasso.get()
             .load(imageUri)
-            .placeholder(ruf.view.locationmap.R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.ic_launcher_background)
             .into(imageView)
     }
 }

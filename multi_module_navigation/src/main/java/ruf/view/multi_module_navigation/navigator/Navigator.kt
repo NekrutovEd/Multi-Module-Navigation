@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import ruf.view.multi_module_navigation.CustomizationCommand
-import ruf.view.multi_module_navigation.ICustomizationCommand
-import ruf.view.multi_module_navigation.ICustomizer
-import ruf.view.multi_module_navigation.IOnBackPressed
+import ruf.view.multi_module_navigation.*
 import ruf.view.multi_module_navigation.command.BackCommand
 import ruf.view.multi_module_navigation.command.ForwardCommand
 import ruf.view.multi_module_navigation.command.ICommand
@@ -20,7 +17,7 @@ import kotlin.reflect.KClass
 
 internal class Navigator(
     @IdRes private val containerId: Int,
-    startModule: FragmentModule?,
+    launcher: ILauncher?,
     override val navigatorScopeName: String
 ) : INavigator, INavigatorManager, ICommandExecutor {
 
@@ -33,10 +30,10 @@ internal class Navigator(
     private val buffer = Buffer()
 
     init {
-        startModule?.also {
+        launcher?.also {
             execute(object : ICommand {
                 override fun execute(navigatorManager: INavigatorManager) {
-                    if (stack.isEmpty()) ForwardCommand { startModule }.execute(navigatorManager)
+                    if (stack.isEmpty()) ForwardCommand { launcher.launchModule }.execute(navigatorManager)
                 }
             })
         }

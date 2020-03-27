@@ -1,7 +1,10 @@
 include ':app'
-include ':multi_module_navigation'
+include ':mediator'
 include ':core'
+include ':multi_module_navigation'
+
+include ':feature_example_box'
 include ':feature_example_box:feature_list_presentation'
 include ':feature_example_box:feature_detail_presentation'
+include ':feature_example_box:feature_dialog'
 include ':feature_example_box:shared_listdata'
-include ':feature_example_box'

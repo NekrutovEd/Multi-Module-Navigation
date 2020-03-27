@@ -1,4 +1,4 @@
-package ruf.view.locationmap.sample.dialog
+package ruf.view.feature_dialog
 
 import android.content.Intent
 import android.provider.MediaStore
@@ -7,7 +7,7 @@ import ruf.view.core.IView
 import toothpick.InjectConstructor
 
 @InjectConstructor
-class ExampleDialogPresenter : IPresenter {
+internal class ExampleDialogPresenter : IPresenter {
 
     private var view: IView? = null
 

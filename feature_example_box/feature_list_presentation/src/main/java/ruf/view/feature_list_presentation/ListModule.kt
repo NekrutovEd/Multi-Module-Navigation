@@ -4,7 +4,7 @@ import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import ruf.view.core.RouterClass
 import ruf.view.multi_module_navigation.module.FragmentModule
-import ruf.view.multi_module_navigation.navigator.INavigatorCommand
+import ruf.view.multi_module_navigation.navigator.ICommanderNavigator
 import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 import ruf.view.shared_listdata.ExampleSharedModule
 import toothpick.Scope
@@ -25,7 +25,7 @@ data class ListModule (
         val provider = ListFragment.ListNavigatorProvider()
 
         bind<INavigatorLifeCycle>().withName(ListNavigator::class).toProviderInstance(provider)
-        bind<INavigatorCommand>().withName(ListNavigator::class).toProviderInstance(provider)
+        bind<ICommanderNavigator>().withName(ListNavigator::class).toProviderInstance(provider)
         bind<IListRouter>().toClass(routerClass.kClass).singleton()
         bind<ListPresenter>().toClass<ListPresenter>().singleton()
     }

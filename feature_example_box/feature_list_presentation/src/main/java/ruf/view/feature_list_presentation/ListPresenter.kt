@@ -11,7 +11,7 @@ internal class ListPresenter(
     private val router: IListRouter
 ) : IPresenter {
 
-    var counter: Int = 0
+    private var counter: Int = 0
 
     private var view: IView? = null
 

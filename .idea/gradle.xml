@@ -14,8 +14,10 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/feature_example_box" />
             <option value="$PROJECT_DIR$/feature_example_box/feature_detail_presentation" />
+            <option value="$PROJECT_DIR$/feature_example_box/feature_dialog" />
             <option value="$PROJECT_DIR$/feature_example_box/feature_list_presentation" />
             <option value="$PROJECT_DIR$/feature_example_box/shared_listdata" />
+            <option value="$PROJECT_DIR$/mediator" />
             <option value="$PROJECT_DIR$/multi_module_navigation" />
           </set>
         </option>

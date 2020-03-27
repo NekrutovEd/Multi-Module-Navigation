@@ -40,12 +40,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.71"
 
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-
-    implementation 'com.squareup.picasso:picasso:2.71828'
-
     implementation 'com.github.stephanenicolas.toothpick:ktp:3.1.0'
     implementation 'com.github.stephanenicolas.toothpick:toothpick-runtime:3.1.0'
     implementation 'com.github.stephanenicolas.toothpick:smoothie:3.1.0'
@@ -54,14 +48,7 @@ dependencies {
     kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
     annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
 
-
-    testImplementation 'junit:junit:4.12'
-
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation project(path: ':multi_module_navigation')
+    implementation project(path: ':mediator')
     implementation project(path: ':core')
-    implementation project(path: ':feature_example_box:feature_list_presentation')
-    implementation project(path: ':feature_example_box:shared_listdata')
-    implementation project(path: ':feature_example_box:feature_detail_presentation')
+    implementation project(path: ':multi_module_navigation')
 }

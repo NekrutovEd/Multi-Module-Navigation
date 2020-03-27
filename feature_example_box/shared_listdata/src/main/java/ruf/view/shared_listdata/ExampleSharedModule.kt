@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 import ruf.view.multi_module_navigation.module.SharedModule
 import toothpick.ktp.binding.bind
 
-class ExampleSharedModule(tag: String, private val name: String) : SharedModule() {
+class ExampleSharedModule(tag: String, name: String) : SharedModule() {
 
     override val scopeName = ScopeNameModel(name)
 
