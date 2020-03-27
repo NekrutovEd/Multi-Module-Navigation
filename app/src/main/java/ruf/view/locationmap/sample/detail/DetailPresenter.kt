@@ -1,6 +1,6 @@
 package ruf.view.locationmap.sample.detail
 
-import ruf.view.locationmap.sample.list.ListData
+import ruf.view.shared_listdata.ListData
 import toothpick.InjectConstructor
 
 @InjectConstructor

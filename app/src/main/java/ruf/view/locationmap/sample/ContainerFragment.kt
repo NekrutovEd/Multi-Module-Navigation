@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ruf.view.core.LogFragment
+import ruf.view.feature_list_presentation.ListModule
 import ruf.view.locationmap.R
-import ruf.view.locationmap.sample.list.ListModule
+import ruf.view.locationmap.sample.list.ListRouterProvider
 import ruf.view.multi_module_navigation.IOnBackPressed
 import ruf.view.multi_module_navigation.module.NavigatorProvider
 import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
@@ -15,7 +16,11 @@ class ContainerFragment : LogFragment(), IOnBackPressed {
 
     private val mainNavigator: INavigatorLifeCycle by lazy { RootNavigatorProvider().get() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.container_fragment, container, false)
 
     override fun onStart() {
@@ -40,5 +45,9 @@ class ContainerFragment : LogFragment(), IOnBackPressed {
 
     override fun onBackPressed() = mainNavigator.onBackPressed()
 
-    private class RootNavigatorProvider : NavigatorProvider(R.id.container, ListModule(" F"), "UniqueRootScopeName")
+    private class RootNavigatorProvider : NavigatorProvider(
+        R.id.container,
+        ListModule(ListRouterProvider, " F"),
+        "UniqueRootScopeName"
+    )
 }

@@ -1,13 +1,14 @@
-package ruf.view.locationmap.sample.list
+package ruf.view.feature_list_presentation
 
 import ruf.view.core.IPresenter
 import ruf.view.core.IView
+import ruf.view.shared_listdata.ListData
 import toothpick.InjectConstructor
 
 @InjectConstructor
 class ListPresenter(
     val data: ListData,
-    private val router: ListRouter
+    private val router: IListRouter
 ) : IPresenter {
 
     var counter: Int = 0

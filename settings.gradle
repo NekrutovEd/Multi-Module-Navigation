@@ -1,3 +1,5 @@
 include ':app'
 include ':multi_module_navigation'
 include ':core'
+include ':feature_list_presentation'
+include ':shared_listdata'

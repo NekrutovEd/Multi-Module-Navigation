@@ -1,4 +1,4 @@
-package ruf.view.locationmap.sample.list
+package ruf.view.feature_list_presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import ruf.view.core.IView
 import ruf.view.core.LogFragment
-import ruf.view.locationmap.R
-import ruf.view.locationmap.sample.ListNavigator
 import ruf.view.multi_module_navigation.IOnBackPressed
 import ruf.view.multi_module_navigation.module.FragmentModule.Companion.injectScope
 import ruf.view.multi_module_navigation.module.NavigatorProvider
