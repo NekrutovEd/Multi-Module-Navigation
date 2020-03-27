@@ -14,7 +14,7 @@ import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 import toothpick.InjectConstructor
 import toothpick.ktp.delegate.inject
 
-class ListFragment : LogFragment(), IView, IOnBackPressed {
+internal class ListFragment : LogFragment(), IView, IOnBackPressed {
 
     private val presenter: ListPresenter by inject()
 

@@ -10,7 +10,7 @@ import ruf.view.core.LogFragment
 import ruf.view.multi_module_navigation.module.FragmentModule.Companion.injectScope
 import toothpick.ktp.delegate.inject
 
-class DetailFragment : LogFragment(), IView {
+internal class DetailFragment : LogFragment(), IView {
 
     private val presenter: DetailPresenter by inject()
 

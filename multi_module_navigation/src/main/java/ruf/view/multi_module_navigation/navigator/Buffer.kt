@@ -3,7 +3,7 @@ package ruf.view.multi_module_navigation.navigator
 import ruf.view.multi_module_navigation.command.ICommand
 import java.util.*
 
-class Buffer {
+internal class Buffer {
 
     private val queue = LinkedList<ICommand>()
 

@@ -4,7 +4,7 @@ import ruf.view.shared_listdata.ListData
 import toothpick.InjectConstructor
 
 @InjectConstructor
-class DetailPresenter(
+internal class DetailPresenter(
     val data: DetailData,
     val listData: ListData,
     private val router: IDetailRouter

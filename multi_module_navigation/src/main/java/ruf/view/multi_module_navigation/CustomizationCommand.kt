@@ -3,11 +3,11 @@ package ruf.view.multi_module_navigation
 import androidx.fragment.app.FragmentTransaction
 import java.util.*
 
-class CustomizationCommand : ICustomizationCommand {
+class CustomizationCommand : ICustomizationCommand, ICustomizer {
 
     private val customList = LinkedList<FragmentTransaction.() -> Unit>()
 
-    fun customize(fragmentTransaction: FragmentTransaction) = customList.forEach { it(fragmentTransaction) }
+    override fun customize(fragmentTransaction: FragmentTransaction) = customList.forEach { it(fragmentTransaction) }
 
     override fun setCustomAnimations(enter: Int, exit: Int): ICustomizationCommand {
         customList.add { setCustomAnimations(enter, exit) }

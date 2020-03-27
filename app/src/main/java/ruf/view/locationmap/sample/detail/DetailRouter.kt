@@ -5,8 +5,8 @@ import ruf.view.feature_detail_presentation.DetailModule
 import ruf.view.feature_detail_presentation.IDetailRouter
 import ruf.view.feature_list_presentation.ListModule
 import ruf.view.multi_module_navigation.ParentNavigator
+import ruf.view.multi_module_navigation.navigator.INavigator
 import ruf.view.multi_module_navigation.navigator.INavigatorCommand
-import ruf.view.multi_module_navigation.navigator.Navigator
 import ruf.view.multi_module_navigation.navigator.backTo
 import ruf.view.shared_listdata.ExampleSharedModule
 import toothpick.InjectConstructor
@@ -21,7 +21,7 @@ class DetailRouter(
         command.forward {
             DetailModule(
                 DetailRouterClass,
-                data.copy(text = "${data.text}+${++(command as Navigator).counter}"),
+                data.copy(text = "${data.text}+${++(command as INavigator).counter}"),
                 scopeNameModel
             )
         }
@@ -31,7 +31,7 @@ class DetailRouter(
         command.replace {
             DetailModule(
                 DetailRouterClass,
-                data.copy(text = data.text.replaceAfterLast('+', (++(command as Navigator).counter).toString())),
+                data.copy(text = data.text.replaceAfterLast('+', (++(command as INavigator).counter).toString())),
                 scopeNameModel
             )
         }

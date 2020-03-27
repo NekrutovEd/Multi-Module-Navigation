@@ -5,6 +5,8 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import ruf.view.multi_module_navigation.CustomizationCommand
+import ruf.view.multi_module_navigation.ICustomizationCommand
+import ruf.view.multi_module_navigation.ICustomizer
 import ruf.view.multi_module_navigation.IOnBackPressed
 import ruf.view.multi_module_navigation.command.BackCommand
 import ruf.view.multi_module_navigation.command.ForwardCommand
@@ -16,13 +18,13 @@ import ruf.view.multi_module_navigation.module.INDIVIDUALITY
 import java.util.*
 import kotlin.reflect.KClass
 
-class Navigator(
+internal class Navigator(
     @IdRes private val containerId: Int,
     startModule: FragmentModule?,
     override val navigatorScopeName: String
 ) : INavigator, INavigatorManager, ICommandExecutor {
 
-    var counter = 0
+    override var counter = 0
 
     private var fragmentManager: FragmentManager? = null
 
@@ -99,31 +101,31 @@ class Navigator(
         }
     }
 
-    override fun replace(module: FragmentModule, customization: CustomizationCommand?) {
-        (module as? DialogFragmentModule)?.also { add(it, customization) }
+    override fun replace(module: FragmentModule, customizer: ICustomizer?) {
+        (module as? DialogFragmentModule)?.also { add(it, customizer) }
             ?: fragmentManager?.findFragmentByTag(module.scopeName)
             ?: fragmentManager?.commit {
-                customizeTransaction(customization)
+                customizeTransaction(customizer)
                 replace(containerId, module.createFragment(), module.scopeName)
                 stack.push(module)
                 addToBackStack(module.scopeName)
             }
     }
 
-    override fun add(module: FragmentModule, customization: CustomizationCommand?) {
+    override fun add(module: FragmentModule, customizer: ICustomizer?) {
         fragmentManager?.findFragmentByTag(module.scopeName)
             ?: fragmentManager?.commit {
-                customizeTransaction(customization)
+                customizeTransaction(customizer)
                 add(module.createFragment(), module.scopeName)
                 stack.push(module)
                 addToBackStack(module.scopeName)
             }
     }
 
-    override fun showDialog(module: DialogFragmentModule, customization: CustomizationCommand?) {
+    override fun showDialog(module: DialogFragmentModule, customizer: ICustomizer?) {
         fragmentManager?.findFragmentByTag(module.scopeName)
             ?: fragmentManager?.commit {
-                customizeTransaction(customization)
+                customizeTransaction(customizer)
                 add(module.createFragment(), module.scopeName)
             }
     }
@@ -154,8 +156,8 @@ class Navigator(
 
 private fun Stack<FragmentModule>.popAndClose() = pop().close()
 
-private fun FragmentTransaction.customizeTransaction(cc: CustomizationCommand?): FragmentTransaction {
-    cc?.customize(this)
+private fun FragmentTransaction.customizeTransaction(customizer: ICustomizer?): FragmentTransaction {
+    customizer?.customize(this)
     return this
 }
 

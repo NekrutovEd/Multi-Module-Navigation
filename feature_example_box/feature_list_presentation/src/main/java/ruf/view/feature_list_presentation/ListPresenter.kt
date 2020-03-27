@@ -6,7 +6,7 @@ import ruf.view.shared_listdata.ListData
 import toothpick.InjectConstructor
 
 @InjectConstructor
-class ListPresenter(
+internal class ListPresenter(
     val data: ListData,
     private val router: IListRouter
 ) : IPresenter {
