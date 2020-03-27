@@ -1,6 +1,6 @@
 package ruf.view.locationmap.library.module
 
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import ruf.view.locationmap.library.navigator.INavigator
 import toothpick.ktp.KTP
 import toothpick.ktp.extension.getInstance

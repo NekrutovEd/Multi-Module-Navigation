@@ -1,7 +1,7 @@
 package ruf.view.locationmap.library
 
-import android.support.annotation.AnimRes
-import android.support.annotation.AnimatorRes
+import androidx.annotation.AnimRes
+import androidx.annotation.AnimatorRes
 
 interface ICustomizationCommand {
 

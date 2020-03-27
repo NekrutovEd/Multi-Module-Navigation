@@ -2,8 +2,8 @@ package ruf.view.locationmap.library.module
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.parcel.IgnoredOnParcel
 import toothpick.Scope
 import kotlin.reflect.KClass

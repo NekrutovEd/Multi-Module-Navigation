@@ -1,6 +1,6 @@
 package ruf.view.locationmap.library
 
-import android.support.v4.app.FragmentTransaction
+import androidx.fragment.app.FragmentTransaction
 import java.util.*
 
 class CustomizationCommand : ICustomizationCommand {

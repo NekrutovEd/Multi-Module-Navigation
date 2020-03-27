@@ -1,6 +1,6 @@
 package ruf.view.locationmap.library.module
 
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import ruf.view.locationmap.library.navigator.INavigator
 import ruf.view.locationmap.library.navigator.INavigatorCommand
 import ruf.view.locationmap.library.navigator.Navigator
