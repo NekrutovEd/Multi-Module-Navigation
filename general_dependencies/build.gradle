@@ -33,6 +33,6 @@ dependencies {
     api 'com.github.stephanenicolas.toothpick:smoothie:3.1.0'
     api 'com.github.stephanenicolas.toothpick:smoothie-androidx:3.1.0'
 
-    api project(path: ':multi_module_navigation')
-    api project(path: ':core')
+    api project(path: ':general_dependencies:multi_module_navigation')
+    api project(path: ':general_dependencies:core')
 }

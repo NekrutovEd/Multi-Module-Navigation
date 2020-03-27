@@ -40,5 +40,5 @@ dependencies {
     kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
     annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
 
-    implementation project(path: ':multi_module_navigation')
+    implementation project(path: ':general_dependencies:multi_module_navigation')
 }
