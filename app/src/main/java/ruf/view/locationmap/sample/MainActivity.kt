@@ -1,10 +1,9 @@
 package ruf.view.locationmap.sample
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ruf.view.locationmap.R
-import ruf.view.locationmap.library.IOnBackPressed
+import ruf.view.multi_module_navigation.IOnBackPressed
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,5 +25,3 @@ class MainActivity : AppCompatActivity() {
 }
 
 private const val TAG_CONTAINER = "ContainerFragment"
-
-fun log(string: String) = Log.i("NAVIGATOR", string)

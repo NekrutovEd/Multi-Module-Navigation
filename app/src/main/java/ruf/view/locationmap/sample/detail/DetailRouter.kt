@@ -1,11 +1,11 @@
 package ruf.view.locationmap.sample.detail
 
-import ruf.view.locationmap.library.navigator.INavigatorCommand
-import ruf.view.locationmap.library.navigator.Navigator
-import ruf.view.locationmap.library.navigator.backTo
-import ruf.view.locationmap.sample.ParentNavigator
 import ruf.view.locationmap.sample.common.ExampleSharedModule
 import ruf.view.locationmap.sample.list.ListModule
+import ruf.view.multi_module_navigation.ParentNavigator
+import ruf.view.multi_module_navigation.navigator.INavigatorCommand
+import ruf.view.multi_module_navigation.navigator.Navigator
+import ruf.view.multi_module_navigation.navigator.backTo
 import toothpick.InjectConstructor
 
 @InjectConstructor

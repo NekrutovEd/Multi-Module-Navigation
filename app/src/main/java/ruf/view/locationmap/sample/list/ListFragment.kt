@@ -6,16 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import ruf.view.locationmap.R
-import ruf.view.locationmap.library.IOnBackPressed
-import ruf.view.locationmap.library.module.FragmentModule.Companion.injectScope
-import ruf.view.locationmap.library.module.NavigatorProvider
-import ruf.view.locationmap.library.navigator.INavigatorLifeCycle
 import ruf.view.locationmap.sample.IView
 import ruf.view.locationmap.sample.ListNavigator
 import ruf.view.locationmap.sample.LogFragment
+import ruf.view.multi_module_navigation.IOnBackPressed
+import ruf.view.multi_module_navigation.module.FragmentModule.Companion.injectScope
+import ruf.view.multi_module_navigation.module.NavigatorProvider
+import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 import toothpick.InjectConstructor
 import toothpick.ktp.delegate.inject
-
 
 class ListFragment : LogFragment(), IView, IOnBackPressed {
 

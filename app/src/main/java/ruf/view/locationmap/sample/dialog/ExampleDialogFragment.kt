@@ -15,8 +15,8 @@ import androidx.fragment.app.DialogFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_fragment.*
 import kotlinx.android.synthetic.main.dialog_fragment.view.*
-import ruf.view.locationmap.library.module.FragmentModule.Companion.injectScope
 import ruf.view.locationmap.sample.IView
+import ruf.view.multi_module_navigation.module.FragmentModule.Companion.injectScope
 import toothpick.ktp.delegate.inject
 import java.io.ByteArrayOutputStream
 import java.io.File

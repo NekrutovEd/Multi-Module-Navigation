@@ -1,8 +1,8 @@
 package ruf.view.locationmap.sample.detail
 
 import kotlinx.android.parcel.Parcelize
-import ruf.view.locationmap.library.module.FragmentModule
 import ruf.view.locationmap.sample.common.ExampleSharedModule
+import ruf.view.multi_module_navigation.module.FragmentModule
 import toothpick.Scope
 import toothpick.ktp.binding.bind
 import java.util.*

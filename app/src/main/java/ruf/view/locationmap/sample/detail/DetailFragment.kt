@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import ruf.view.locationmap.R
-import ruf.view.locationmap.library.module.FragmentModule.Companion.injectScope
 import ruf.view.locationmap.sample.IView
 import ruf.view.locationmap.sample.LogFragment
+import ruf.view.multi_module_navigation.module.FragmentModule.Companion.injectScope
 import toothpick.ktp.delegate.inject
 
 class DetailFragment : LogFragment(), IView {

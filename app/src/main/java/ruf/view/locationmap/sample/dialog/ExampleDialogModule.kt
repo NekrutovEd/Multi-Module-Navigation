@@ -1,7 +1,7 @@
 package ruf.view.locationmap.sample.dialog
 
 import kotlinx.android.parcel.Parcelize
-import ruf.view.locationmap.library.module.DialogFragmentModule
+import ruf.view.multi_module_navigation.module.DialogFragmentModule
 import java.util.*
 
 @Parcelize

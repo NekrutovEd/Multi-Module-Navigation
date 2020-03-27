@@ -2,11 +2,11 @@ package ruf.view.locationmap.sample.list
 
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
-import ruf.view.locationmap.library.module.FragmentModule
-import ruf.view.locationmap.library.navigator.INavigatorCommand
-import ruf.view.locationmap.library.navigator.INavigatorLifeCycle
 import ruf.view.locationmap.sample.ListNavigator
 import ruf.view.locationmap.sample.common.ExampleSharedModule
+import ruf.view.multi_module_navigation.module.FragmentModule
+import ruf.view.multi_module_navigation.navigator.INavigatorCommand
+import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 import toothpick.Scope
 import toothpick.ktp.binding.bind
 import java.util.*

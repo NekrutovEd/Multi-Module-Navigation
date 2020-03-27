@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ruf.view.locationmap.R
-import ruf.view.locationmap.library.IOnBackPressed
-import ruf.view.locationmap.library.module.NavigatorProvider
-import ruf.view.locationmap.library.navigator.INavigatorLifeCycle
 import ruf.view.locationmap.sample.list.ListModule
+import ruf.view.multi_module_navigation.IOnBackPressed
+import ruf.view.multi_module_navigation.module.NavigatorProvider
+import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 
 class ContainerFragment : LogFragment(), IOnBackPressed {
 

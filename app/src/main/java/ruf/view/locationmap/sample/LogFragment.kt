@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 
@@ -12,22 +13,22 @@ abstract class LogFragment : Fragment() {
 
     protected var logTag: String = this::class.java.name
 
-    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         log("$logTag onCreateContextMenu")
         super.onCreateContextMenu(menu, v, menuInfo)
     }
 
-    override fun onContextItemSelected(item: MenuItem?): Boolean {
+    override fun onContextItemSelected(item: MenuItem): Boolean {
         log("$logTag onContextItemSelected")
         return super.onContextItemSelected(item)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         log("$logTag onConfigurationChanged")
         super.onConfigurationChanged(newConfig)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         log("$logTag onAttach")
         super.onAttach(context)
     }
@@ -37,7 +38,7 @@ abstract class LogFragment : Fragment() {
         super.onPause()
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?) {
+    override fun onPrepareOptionsMenu(menu: Menu) {
         log("$logTag onPrepareOptionsMenu")
         super.onPrepareOptionsMenu(menu)
     }
@@ -52,7 +53,7 @@ abstract class LogFragment : Fragment() {
         super.onMultiWindowModeChanged(isInMultiWindowMode)
     }
 
-    override fun onInflate(context: Context?, attrs: AttributeSet?, savedInstanceState: Bundle?) {
+    override fun onInflate(context: Context, attrs: AttributeSet, savedInstanceState: Bundle?) {
         log("$logTag onInflate")
         super.onInflate(context, attrs, savedInstanceState)
     }
@@ -77,7 +78,7 @@ abstract class LogFragment : Fragment() {
         super.onLowMemory()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         log("$logTag onCreateOptionsMenu")
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -92,7 +93,7 @@ abstract class LogFragment : Fragment() {
         super.onDestroyOptionsMenu()
     }
 
-    override fun onOptionsMenuClosed(menu: Menu?) {
+    override fun onOptionsMenuClosed(menu: Menu) {
         log("$logTag onOptionsMenuClosed")
         super.onOptionsMenuClosed(menu)
     }
@@ -122,7 +123,7 @@ abstract class LogFragment : Fragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onAttachFragment(childFragment: Fragment?) {
+    override fun onAttachFragment(childFragment: Fragment) {
         log("$logTag onAttachFragment")
         super.onAttachFragment(childFragment)
     }
@@ -147,7 +148,7 @@ abstract class LogFragment : Fragment() {
         super.onStop()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         log("$logTag onOptionsItemSelected")
         return super.onOptionsItemSelected(item)
     }

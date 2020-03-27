@@ -1,1 +1,2 @@
 include ':app'
+include ':multi_module_navigation'

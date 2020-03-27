@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+
+    implementation 'com.github.stephanenicolas.toothpick:ktp:3.1.0'
+    implementation 'com.github.stephanenicolas.toothpick:toothpick-runtime:3.1.0'
+    implementation 'com.github.stephanenicolas.toothpick:smoothie:3.1.0'
+    implementation 'com.github.stephanenicolas.toothpick:smoothie-androidx:3.1.0'
+
+    kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
+    annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
+}
