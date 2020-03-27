@@ -1,9 +1,9 @@
 include ':app'
 include ':mediator'
+include ':general_dependencies'
 include ':core'
 include ':multi_module_navigation'
 
-include ':feature_example_box'
 include ':feature_example_box:feature_list_presentation'
 include ':feature_example_box:feature_detail_presentation'
 include ':feature_example_box:feature_dialog'
