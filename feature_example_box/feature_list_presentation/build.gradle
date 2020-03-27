@@ -43,5 +43,5 @@ dependencies {
 
     implementation project(path: ':multi_module_navigation')
     implementation project(path: ':core')
-    implementation project(path: ':shared_listdata')
+    implementation project(path: ':feature_example_box:shared_listdata')
 }

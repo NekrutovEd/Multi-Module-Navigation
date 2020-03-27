@@ -12,10 +12,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/feature_detail_presentation" />
-            <option value="$PROJECT_DIR$/feature_list_presentation" />
+            <option value="$PROJECT_DIR$/feature_example_box" />
+            <option value="$PROJECT_DIR$/feature_example_box/feature_detail_presentation" />
+            <option value="$PROJECT_DIR$/feature_example_box/feature_list_presentation" />
+            <option value="$PROJECT_DIR$/feature_example_box/shared_listdata" />
             <option value="$PROJECT_DIR$/multi_module_navigation" />
-            <option value="$PROJECT_DIR$/shared_listdata" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

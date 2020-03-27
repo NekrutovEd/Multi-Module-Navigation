@@ -61,7 +61,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(path: ':multi_module_navigation')
     implementation project(path: ':core')
-    implementation project(path: ':feature_list_presentation')
-    implementation project(path: ':shared_listdata')
-    implementation project(path: ':feature_detail_presentation')
+    implementation project(path: ':feature_example_box:feature_list_presentation')
+    implementation project(path: ':feature_example_box:shared_listdata')
+    implementation project(path: ':feature_example_box:feature_detail_presentation')
 }
