@@ -1,11 +1,12 @@
 package ruf.view.locationmap.sample.list
 
+import ruf.view.feature_detail_presentation.DetailData
+import ruf.view.feature_detail_presentation.DetailModule
 import ruf.view.feature_list_presentation.IListRouter
 import ruf.view.feature_list_presentation.ListModule
 import ruf.view.feature_list_presentation.ListNavigator
 import ruf.view.locationmap.R
-import ruf.view.locationmap.sample.detail.DetailData
-import ruf.view.locationmap.sample.detail.DetailModule
+import ruf.view.locationmap.sample.detail.DetailRouterClass
 import ruf.view.locationmap.sample.dialog.ExampleDialogModule
 import ruf.view.multi_module_navigation.ParentNavigator
 import ruf.view.multi_module_navigation.navigator.INavigatorCommand
@@ -26,7 +27,11 @@ class ListRouter(
             R.anim.first_list_enter,
             R.anim.first_list_exit
         )
-        DetailModule(DetailData("First detail"), scopeNameModel)
+        DetailModule(
+            DetailRouterClass,
+            DetailData("First detail"),
+            scopeNameModel
+        )
     }
 
     override fun showDialog() = command.showDialog { ExampleDialogModule() }
@@ -40,7 +45,7 @@ class ListRouter(
                 R.anim.first_list_enter,
                 R.anim.first_list_exit
             )
-            ListModule(ListRouterProvider, tag)
+            ListModule(ListRouterClass, tag)
         }
     }
 

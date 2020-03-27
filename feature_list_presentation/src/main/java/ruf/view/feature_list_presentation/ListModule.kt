@@ -2,7 +2,7 @@ package ruf.view.feature_list_presentation
 
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
-import ruf.view.core.RouterClassProvider
+import ruf.view.core.RouterClass
 import ruf.view.multi_module_navigation.module.FragmentModule
 import ruf.view.multi_module_navigation.navigator.INavigatorCommand
 import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
@@ -13,7 +13,7 @@ import java.util.*
 
 @Parcelize
 data class ListModule (
-    private val routerProvider: RouterClassProvider<out IListRouter>,
+    private val routerClass: RouterClass<IListRouter>,
     private val tag: String,
     override val scopeName: String = UUID.randomUUID().toString()
 ) : FragmentModule(ListFragment::class) {
@@ -26,7 +26,7 @@ data class ListModule (
 
         bind<INavigatorLifeCycle>().withName(ListNavigator::class).toProviderInstance(provider)
         bind<INavigatorCommand>().withName(ListNavigator::class).toProviderInstance(provider)
-        bind<IListRouter>().toClass(routerProvider.get()).singleton()
+        bind<IListRouter>().toClass(routerClass.kClass).singleton()
         bind<ListPresenter>().toClass<ListPresenter>().singleton()
     }
 

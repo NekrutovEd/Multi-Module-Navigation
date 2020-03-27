@@ -1,4 +1,4 @@
-package ruf.view.locationmap.sample.detail
+package ruf.view.feature_detail_presentation
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

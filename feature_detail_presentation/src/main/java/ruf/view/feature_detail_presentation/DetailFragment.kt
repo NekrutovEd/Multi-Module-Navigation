@@ -1,4 +1,4 @@
-package ruf.view.locationmap.sample.detail
+package ruf.view.feature_detail_presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import ruf.view.core.IView
 import ruf.view.core.LogFragment
-import ruf.view.locationmap.R
 import ruf.view.multi_module_navigation.module.FragmentModule.Companion.injectScope
 import toothpick.ktp.delegate.inject
 

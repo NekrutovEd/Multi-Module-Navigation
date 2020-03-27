@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/feature_detail_presentation" />
             <option value="$PROJECT_DIR$/feature_list_presentation" />
             <option value="$PROJECT_DIR$/multi_module_navigation" />
             <option value="$PROJECT_DIR$/shared_listdata" />

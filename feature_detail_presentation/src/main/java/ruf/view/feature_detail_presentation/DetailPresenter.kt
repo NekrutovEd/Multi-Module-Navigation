@@ -1,4 +1,4 @@
-package ruf.view.locationmap.sample.detail
+package ruf.view.feature_detail_presentation
 
 import ruf.view.shared_listdata.ListData
 import toothpick.InjectConstructor
@@ -7,7 +7,7 @@ import toothpick.InjectConstructor
 class DetailPresenter(
     val data: DetailData,
     val listData: ListData,
-    private val router: DetailRouter
+    private val router: IDetailRouter
 ) {
 
     fun addDetail() = router.addDetail(data)

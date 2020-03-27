@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import ruf.view.core.LogFragment
 import ruf.view.feature_list_presentation.ListModule
 import ruf.view.locationmap.R
-import ruf.view.locationmap.sample.list.ListRouterProvider
+import ruf.view.locationmap.sample.list.ListRouterClass
 import ruf.view.multi_module_navigation.IOnBackPressed
 import ruf.view.multi_module_navigation.module.NavigatorProvider
 import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
@@ -47,7 +47,7 @@ class ContainerFragment : LogFragment(), IOnBackPressed {
 
     private class RootNavigatorProvider : NavigatorProvider(
         R.id.container,
-        ListModule(ListRouterProvider, " F"),
+        ListModule(ListRouterClass, " F"),
         "UniqueRootScopeName"
     )
 }
