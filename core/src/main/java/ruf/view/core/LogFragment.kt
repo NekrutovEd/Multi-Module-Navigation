@@ -1,4 +1,4 @@
-package ruf.view.locationmap.sample
+package ruf.view.core
 
 import android.content.Context
 import android.content.Intent

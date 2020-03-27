@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ruf.view.core.LogFragment
 import ruf.view.locationmap.R
 import ruf.view.locationmap.sample.list.ListModule
 import ruf.view.multi_module_navigation.IOnBackPressed

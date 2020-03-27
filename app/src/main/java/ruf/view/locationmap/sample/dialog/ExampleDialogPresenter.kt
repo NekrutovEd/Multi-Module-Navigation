@@ -2,8 +2,7 @@ package ruf.view.locationmap.sample.dialog
 
 import android.content.Intent
 import android.provider.MediaStore
-import ruf.view.locationmap.sample.IPresenter
-import ruf.view.locationmap.sample.IView
+import ruf.view.core.IPresenter
 import toothpick.InjectConstructor
 
 @InjectConstructor
