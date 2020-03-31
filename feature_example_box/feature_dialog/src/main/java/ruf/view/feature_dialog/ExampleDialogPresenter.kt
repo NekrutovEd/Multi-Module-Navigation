@@ -2,22 +2,13 @@ package ruf.view.feature_dialog
 
 import android.content.Intent
 import android.provider.MediaStore
+import ruf.view.core.BasePresenter
 import ruf.view.core.IPresenter
 import ruf.view.core.IView
 import toothpick.InjectConstructor
 
 @InjectConstructor
-internal class ExampleDialogPresenter : IPresenter {
-
-    private var view: IView? = null
-
-    override fun attachView(view: IView) {
-        this.view = view
-    }
-
-    override fun detachView() {
-        this.view = null
-    }
+internal class ExampleDialogPresenter : BasePresenter() {
 
     fun share() {
         processGalleryImageCCC2()

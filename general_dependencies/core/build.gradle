@@ -31,4 +31,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
+
+    api 'com.github.stephanenicolas.toothpick:ktp:3.1.0'
+    api 'com.github.stephanenicolas.toothpick:toothpick-runtime:3.1.0'
+    api 'com.github.stephanenicolas.toothpick:smoothie:3.1.0'
+    api 'com.github.stephanenicolas.toothpick:smoothie-androidx:3.1.0'
+
+    kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
+    annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
 }

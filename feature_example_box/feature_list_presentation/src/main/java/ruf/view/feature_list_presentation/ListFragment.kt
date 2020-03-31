@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import ruf.view.core.BaseFragment
 import ruf.view.core.IView
 import ruf.view.core.LogFragment
 import ruf.view.multi_module_navigation.IOnBackPressed
@@ -14,9 +15,9 @@ import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 import toothpick.InjectConstructor
 import toothpick.ktp.delegate.inject
 
-internal class ListFragment : LogFragment(), IView, IOnBackPressed {
+internal class ListFragment : BaseFragment(), IOnBackPressed {
 
-    private val presenter: ListPresenter by inject()
+    override val presenter: ListPresenter by inject()
 
     private val navigator: INavigatorLifeCycle by inject(ListNavigator::class)
 
@@ -37,11 +38,6 @@ internal class ListFragment : LogFragment(), IView, IOnBackPressed {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.attachView(this)
-    }
-
     override fun onStart() {
         super.onStart()
         navigator.attachFragmentManager(childFragmentManager)
@@ -50,11 +46,6 @@ internal class ListFragment : LogFragment(), IView, IOnBackPressed {
     override fun onStop() {
         navigator.detachFragmentManager()
         super.onStop()
-    }
-
-    override fun onDestroyView() {
-        presenter.detachView()
-        super.onDestroyView()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

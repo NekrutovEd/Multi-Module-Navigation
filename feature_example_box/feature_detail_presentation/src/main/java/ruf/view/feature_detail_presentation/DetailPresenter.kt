@@ -1,5 +1,6 @@
 package ruf.view.feature_detail_presentation
 
+import ruf.view.core.BasePresenter
 import ruf.view.shared_listdata.ListData
 import toothpick.InjectConstructor
 
@@ -8,7 +9,7 @@ internal class DetailPresenter(
     val data: DetailData,
     val listData: ListData,
     private val router: IDetailRouter
-) {
+) : BasePresenter() {
 
     fun addDetail() = router.addDetail(data)
 
