@@ -44,7 +44,8 @@ class ContainerFragment : LogFragment(), IOnBackPressed {
     private class RootNavigatorProvider : NavigatorProvider(
         containerId = R.id.container,
         launcher = MainLauncher(),
-        scopeIdentifier = ScopeModule.ScopeIdentifier(UNIQUE_ROOT_SCOPE_NAME)
+        scopeIdentifier = ScopeModule.ScopeIdentifier(UNIQUE_ROOT_SCOPE_NAME),
+        parentScopeIdentifier = ExampleApiModule.scopeIdentifier
     )
 
     companion object {

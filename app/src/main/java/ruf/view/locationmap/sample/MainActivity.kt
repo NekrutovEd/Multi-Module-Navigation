@@ -4,12 +4,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ruf.view.locationmap.R
 import ruf.view.multi_module_navigation.IOnBackPressed
+import toothpick.ktp.KTP
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
+
+        KTP.openRootScope()
+            .openSubScope(ExampleApiModule.scopeIdentifier).installModules(ExampleApiModule())
 
         supportFragmentManager.findFragmentByTag(TAG_CONTAINER)
             ?: supportFragmentManager.beginTransaction()
