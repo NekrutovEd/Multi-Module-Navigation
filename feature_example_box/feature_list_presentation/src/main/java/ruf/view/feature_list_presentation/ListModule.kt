@@ -7,32 +7,30 @@ import ruf.view.multi_module_navigation.module.FragmentModule
 import ruf.view.multi_module_navigation.navigator.ICommanderNavigator
 import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 import ruf.view.shared_listdata.ExampleSharedModule
-import toothpick.Scope
+import ruf.view.shared_listdata.ListData
 import toothpick.ktp.binding.bind
-import java.util.*
 
 @Parcelize
 data class ListModule (
     private val routerClass: RouterClass<IListRouter>,
-    private val tag: String,
-    override val scopeName: String = UUID.randomUUID().toString()
+    private val textData: String,
+    override val scopeIdentifier: ScopeIdentifier = randomScopeIdentifier<ListModule>()
 ) : FragmentModule(ListFragment::class) {
 
     @IgnoredOnParcel
-    private val sharedModule = ExampleSharedModule(tag, "ShareModule $scopeName")
+    private val sharedModule = ExampleSharedModule(textData, "ShareModule $scopeIdentifier")
 
     init {
-        val provider = ListFragment.ListNavigatorProvider()
+        bind<ExampleSharedModule.ExampleSharedIdentifier>().toInstance(sharedModule.scopeIdentifier)
+        bind<ListData>().toInstance(sharedModule.scopeIdentifier.getInstanceFromScope<ListData>())
 
+        val provider = ListFragment.ListNavigatorProvider()
         bind<INavigatorLifeCycle>().withName(ListNavigator::class).toProviderInstance(provider)
         bind<ICommanderNavigator>().withName(ListNavigator::class).toProviderInstance(provider)
+
         bind<IListRouter>().toClass(routerClass.kClass).singleton()
         bind<ListPresenter>().toClass<ListPresenter>().singleton()
     }
 
     override fun onCloseScope() = sharedModule.close()
-
-    override fun Scope.openDependentScopes(): Scope = installAndOpenSharedScope(sharedModule)
-    /*.openSubScope(RepositoryModule::class)*/
-    /*.openSubScope(ApiModule::class)*/
 }

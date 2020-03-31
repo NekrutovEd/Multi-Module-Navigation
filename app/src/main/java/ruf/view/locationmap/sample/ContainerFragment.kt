@@ -9,6 +9,7 @@ import ruf.view.locationmap.R
 import ruf.view.mediator.launcher.MainLauncher
 import ruf.view.multi_module_navigation.IOnBackPressed
 import ruf.view.multi_module_navigation.module.NavigatorProvider
+import ruf.view.multi_module_navigation.module.ScopeModule
 import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 
 class ContainerFragment : LogFragment(), IOnBackPressed {
@@ -40,5 +41,13 @@ class ContainerFragment : LogFragment(), IOnBackPressed {
 
     override fun onBackPressed() = mainNavigator.onBackPressed()
 
-    private class RootNavigatorProvider : NavigatorProvider(R.id.container, MainLauncher(), "UniqueRootScopeName")
+    private class RootNavigatorProvider : NavigatorProvider(
+        containerId = R.id.container,
+        launcher = MainLauncher(),
+        scopeIdentifier = ScopeModule.ScopeIdentifier(UNIQUE_ROOT_SCOPE_NAME)
+    )
+
+    companion object {
+        const val UNIQUE_ROOT_SCOPE_NAME = "UniqueRootScopeName"
+    }
 }

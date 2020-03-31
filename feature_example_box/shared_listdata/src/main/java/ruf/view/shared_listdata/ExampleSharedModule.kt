@@ -1,19 +1,21 @@
 package ruf.view.shared_listdata
 
-import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import ruf.view.multi_module_navigation.module.SharedModule
 import toothpick.ktp.binding.bind
 
-class ExampleSharedModule(tag: String, name: String) : SharedModule() {
+class ExampleSharedModule(
+    textData: String,
+    scopeName: String
+) : SharedModule() {
 
-    override val scopeName = ScopeNameModel(name)
+    override val scopeIdentifier = ExampleSharedIdentifier(scopeName)
 
     init {
-        bind<ListData>().toInstance(ListData(tag))
-        bind<ScopeNameModel>().toInstance(scopeName)
+        bind<ListData>().toInstance(ListData(textData))
+        installModule()
     }
 
     @Parcelize
-    data class ScopeNameModel(val scopeName: String) : Parcelable
+    data class ExampleSharedIdentifier(override val name: String) : ScopeIdentifier(name)
 }

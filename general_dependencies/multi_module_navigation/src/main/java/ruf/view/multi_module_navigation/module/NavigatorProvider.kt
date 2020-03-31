@@ -2,6 +2,7 @@ package ruf.view.multi_module_navigation.module
 
 import androidx.annotation.IdRes
 import ruf.view.multi_module_navigation.ILauncher
+import ruf.view.multi_module_navigation.module.ScopeModule.Companion.randomScopeIdentifier
 import ruf.view.multi_module_navigation.navigator.INavigator
 import toothpick.ktp.KTP
 import toothpick.ktp.extension.getInstance
@@ -9,14 +10,18 @@ import java.util.*
 import javax.inject.Provider
 
 abstract class NavigatorProvider(
-    @IdRes containerId: Int,
-    launcher: ILauncher?,
-    private val scopeName: String = UUID.randomUUID().toString()
+    @IdRes
+    private val containerId: Int,
+    private val launcher: ILauncher?,
+    private val scopeIdentifier: ScopeModule.ScopeIdentifier = randomScopeIdentifier<NavigatorModule>()
 ) : Provider<INavigator> {
 
-    init {
-        NavigatorModule(containerId, launcher, scopeName).installModule()
+    private fun initNavigator() {
+        NavigatorModule(containerId, launcher, scopeIdentifier).installModule()
     }
 
-    final override fun get() = KTP.openScope(ScopeModule.ScopeIdentifier(NavigatorModule::class, scopeName)).getInstance<INavigator>()
+    final override fun get(): INavigator {
+        initNavigator()
+        return KTP.openScope(scopeIdentifier).getInstance()
+    }
 }

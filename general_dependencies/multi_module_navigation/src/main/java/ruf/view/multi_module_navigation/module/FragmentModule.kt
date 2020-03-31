@@ -4,46 +4,28 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import kotlinx.android.parcel.IgnoredOnParcel
-import toothpick.Scope
 import kotlin.reflect.KClass
 
-const val INDIVIDUALITY = "INDIVIDUALITY"
+const val FRAGMENT_MODULE_KEY = "Scope_Identifier_Key_For_FragmentModule"
 
 abstract class FragmentModule(private val fragment: Class<out Fragment>) : ScopeModule(), Parcelable {
-
     constructor(fragment: KClass<out Fragment>) : this(fragment.java)
 
-    abstract override val scopeName: String
-
-    @IgnoredOnParcel
-    lateinit var navigatorScopeName: String
+    val scopeTag get() = scopeIdentifier.name
 
     open fun customizeTransactionsWithModule(transaction: FragmentTransaction): FragmentTransaction = transaction
 
     fun createFragment(): Fragment = fragment.newInstance().also {
         val arguments = it.arguments ?: Bundle()
-        arguments.putString(INDIVIDUALITY, scopeName)
+        arguments.putParcelable(FRAGMENT_MODULE_KEY, scopeIdentifier)
         it.arguments = arguments
-    }
-
-    protected open fun Scope.openDependentScopes(): Scope = this
-
-    protected fun Scope.installAndOpenSharedScope(sharedModule: SharedModule): Scope {
-        sharedModule.navigatorScopeName = navigatorScopeName
-        sharedModule.installModule()
-        return openSubScope(sharedModule.scopeName)
-    }
-
-    final override fun Scope.openSubScopes(): Scope {
-        return openSubScope(ScopeIdentifier(NavigatorModule::class, navigatorScopeName))
-            .openDependentScopes()
-            .openSubScope(ScopeIdentifier(this@FragmentModule::class, scopeName))
     }
 
     companion object {
         inline fun <reified SM : FragmentModule> Fragment.injectScope(arguments: Bundle?) {
-            this.injectScope<SM>(arguments?.getString(INDIVIDUALITY) ?: "")
+            val scopeIdentifier: ScopeIdentifier = arguments?.getParcelable(FRAGMENT_MODULE_KEY)
+                ?: error("Arguments haven't ScopeIdentifier for ${SM::class.simpleName}")
+            injectScope<SM>(scopeIdentifier)
         }
     }
 }

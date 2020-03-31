@@ -15,20 +15,20 @@ import toothpick.InjectConstructor
 
 @InjectConstructor
 class ListRouter(
-    @ParentNavigator private val commander: ICommanderNavigator,
+    @ParentNavigator private val parentCommander: ICommanderNavigator,
     @ListNavigator private val listCommander: ICommanderNavigator,
-    private val scopeNameModel: ExampleSharedModule.ScopeNameModel
+    private val exampleSharedIdentifier: ExampleSharedModule.ExampleSharedIdentifier
 ) : IListRouter {
 
-    override fun openDetail() = commander.forward {
+    override fun openDetail() = parentCommander.forward {
         setCustomAnimations(
             R.anim.first_list_enter, R.anim.first_list_exit,
             R.anim.first_list_enter, R.anim.first_list_exit
         )
-        DetailModule(DetailRouterClass, DetailData("First detail"), scopeNameModel)
+        DetailModule(DetailRouterClass, DetailData("First detail"), exampleSharedIdentifier)
     }
 
-    override fun showDialog() = commander.showDialog { ExampleDialogModule() }
+    override fun showDialog() = parentCommander.showDialog { ExampleDialogModule() }
 
     override fun addListModule(tag: String) {
         listCommander.backTo(null)
@@ -38,6 +38,7 @@ class ListRouter(
                 R.anim.first_list_enter, R.anim.first_list_exit
             )
             ListModule(ListRouterClass, tag)
+//            DetailModule(DetailRouterClass, DetailData("List detail"), exampleSharedIdentifier)
         }
     }
 

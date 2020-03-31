@@ -14,20 +14,22 @@ import toothpick.InjectConstructor
 @InjectConstructor
 class DetailRouter(
     @ParentNavigator private val commander: ICommanderNavigator,
-    private val scopeNameModel: ExampleSharedModule.ScopeNameModel
+    private val scopeNameIdentifier: ExampleSharedModule.ExampleSharedIdentifier
 ) : IDetailRouter {
 
     override fun addDetail(data: DetailData) {
         commander.forward {
             val newData = data.copy(text = "${data.text}+${++(commander as INavigator).counter}")
-            DetailModule(DetailRouterClass, newData, scopeNameModel)
+
+            DetailModule(DetailRouterClass, newData, scopeNameIdentifier)
         }
     }
 
     override fun replace(data: DetailData) {
         commander.replace {
             val newData = data.copy(text = data.text.replaceAfterLast('+', (++(commander as INavigator).counter).toString()))
-            DetailModule(DetailRouterClass, newData, scopeNameModel)
+
+            DetailModule(DetailRouterClass, newData, scopeNameIdentifier)
         }
     }
 

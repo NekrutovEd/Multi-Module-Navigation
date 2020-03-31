@@ -25,7 +25,7 @@ internal class ListPresenter(
 
     fun openDetail() = router.openDetail()
 
-    fun addModule() = router.addListModule(data.tag + counter++)
+    fun addModule() = router.addListModule(data.textData + counter++)
 
     fun removeModule() = router.removeListModule()
 

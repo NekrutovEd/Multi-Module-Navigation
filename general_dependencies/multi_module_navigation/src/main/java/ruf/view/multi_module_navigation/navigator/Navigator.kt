@@ -11,14 +11,16 @@ import ruf.view.multi_module_navigation.command.ICommand
 import ruf.view.multi_module_navigation.command.ICommandExecutor
 import ruf.view.multi_module_navigation.module.DialogFragmentModule
 import ruf.view.multi_module_navigation.module.FragmentModule
-import ruf.view.multi_module_navigation.module.INDIVIDUALITY
+import ruf.view.multi_module_navigation.module.ScopeModule
 import java.util.*
 import kotlin.reflect.KClass
+
+private const val NAVIGATOR_SAVE_INSTANCE_STATE_KEY = "Saved_Instance_State_Key_For_Navigator"
 
 internal class Navigator(
     @IdRes private val containerId: Int,
     launcher: ILauncher?,
-    override val navigatorScopeName: String
+    override val navigatorScopeIdentifier: ScopeModule.ScopeIdentifier
 ) : INavigator, INavigatorManager, ICommandExecutor {
 
     override var counter = 0
@@ -40,8 +42,8 @@ internal class Navigator(
     }
 
     override fun onBackPressed(): Boolean {
-        val scopeName = stack.takeIf { it.isNotEmpty() }?.peek()?.scopeName
-        val iOnBackPressed = fragmentManager?.findFragmentByTag(scopeName) as? IOnBackPressed
+        val scopeTag = stack.takeIf { it.isNotEmpty() }?.peek()?.scopeTag
+        val iOnBackPressed = fragmentManager?.findFragmentByTag(scopeTag) as? IOnBackPressed
         return when {
             iOnBackPressed?.onBackPressed() == true -> true
 
@@ -55,14 +57,14 @@ internal class Navigator(
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        counter = savedInstanceState?.getInt(INDIVIDUALITY + "COUNTER") ?: counter
-        savedInstanceState?.getParcelableArrayList<FragmentModule>(INDIVIDUALITY + "LIST")?.let { savedList ->
+        counter = savedInstanceState?.getInt(NAVIGATOR_SAVE_INSTANCE_STATE_KEY + "_COUNTER") ?: counter
+        savedInstanceState?.getParcelableArrayList<FragmentModule>(NAVIGATOR_SAVE_INSTANCE_STATE_KEY)?.let { savedList ->
             savedList.takeIf { it.isNotEmpty() }
                 ?.also {
                     stack.clear()
                     stack.addAll(it)
                     stack.peek()?.also { module ->
-                        module.navigatorScopeName = navigatorScopeName
+                        module.parentScopeIdentifier = navigatorScopeIdentifier
                         module.installModule()
                     }
                 }
@@ -70,17 +72,17 @@ internal class Navigator(
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(INDIVIDUALITY + "COUNTER", counter)
-        outState.putParcelableArrayList(INDIVIDUALITY + "LIST", ArrayList(stack))
+        outState.putInt(NAVIGATOR_SAVE_INSTANCE_STATE_KEY + "_COUNTER", counter)
+        outState.putParcelableArrayList(NAVIGATOR_SAVE_INSTANCE_STATE_KEY, ArrayList(stack))
     }
 
     override fun attachFragmentManager(fragmentManager: FragmentManager) {
         this.fragmentManager = fragmentManager
         stack.takeIf { it.isNotEmpty() }?.peek()?.also { module ->
-            fragmentManager.findFragmentByTag(module.scopeName)
+            fragmentManager.findFragmentByTag(module.scopeTag)
                 ?: fragmentManager.commit {
-                    replace(containerId, module.createFragment(), module.scopeName)
-                    addToBackStack(module.scopeName)
+                    replace(containerId, module.createFragment(), module.scopeTag)
+                    addToBackStack(module.scopeTag)
                 }
         }
         buffer.executeAll(this)
@@ -100,30 +102,30 @@ internal class Navigator(
 
     override fun replace(module: FragmentModule, customizer: ICustomizer?) {
         (module as? DialogFragmentModule)?.also { add(it, customizer) }
-            ?: fragmentManager?.findFragmentByTag(module.scopeName)
+            ?: fragmentManager?.findFragmentByTag(module.scopeTag)
             ?: fragmentManager?.commit {
                 customizeTransaction(customizer)
-                replace(containerId, module.createFragment(), module.scopeName)
+                replace(containerId, module.createFragment(), module.scopeTag)
                 stack.push(module)
-                addToBackStack(module.scopeName)
+                addToBackStack(module.scopeTag)
             }
     }
 
     override fun add(module: FragmentModule, customizer: ICustomizer?) {
-        fragmentManager?.findFragmentByTag(module.scopeName)
+        fragmentManager?.findFragmentByTag(module.scopeTag)
             ?: fragmentManager?.commit {
                 customizeTransaction(customizer)
-                add(module.createFragment(), module.scopeName)
+                add(module.createFragment(), module.scopeTag)
                 stack.push(module)
-                addToBackStack(module.scopeName)
+                addToBackStack(module.scopeTag)
             }
     }
 
     override fun showDialog(module: DialogFragmentModule, customizer: ICustomizer?) {
-        fragmentManager?.findFragmentByTag(module.scopeName)
+        fragmentManager?.findFragmentByTag(module.scopeTag)
             ?: fragmentManager?.commit {
                 customizeTransaction(customizer)
-                add(module.createFragment(), module.scopeName)
+                add(module.createFragment(), module.scopeTag)
             }
     }
 
@@ -143,7 +145,7 @@ internal class Navigator(
             val fragmentModule = stack.findLast { it::class == kClass }
             val distance = stack.search(fragmentModule)
             if (distance <= 1) return
-            fragmentManager?.popBackStackImmediate(fragmentModule?.scopeName, 0)
+            fragmentManager?.popBackStackImmediate(fragmentModule?.scopeTag, 0)
             for (i in 1 until distance) {
                 stack.popAndClose()
             }

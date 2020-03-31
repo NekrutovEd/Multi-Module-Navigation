@@ -10,7 +10,7 @@ class ShowDialogCommand(private val getDialogModule: ICustomizationCommand.() ->
     override fun execute(navigatorManager: INavigatorManager) {
         val customizationCommand = CustomizationCommand()
         val module = getDialogModule(customizationCommand)
-        module.navigatorScopeName = navigatorManager.navigatorScopeName
+        module.parentScopeIdentifier = navigatorManager.navigatorScopeIdentifier
         module.installModule()
         navigatorManager.showDialog(module, customizationCommand)
     }

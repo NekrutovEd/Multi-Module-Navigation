@@ -1,37 +1,62 @@
 package ruf.view.multi_module_navigation.module
 
+import android.os.Parcelable
+import kotlinx.android.parcel.IgnoredOnParcel
+import kotlinx.android.parcel.Parcelize
 import toothpick.Scope
 import toothpick.config.Module
 import toothpick.ktp.KTP
+import toothpick.ktp.extension.getInstance
+import java.util.*
 import kotlin.reflect.KClass
 
 abstract class ScopeModule : Module() {
 
-    abstract val scopeName: Any
+    abstract val scopeIdentifier: ScopeIdentifier
+
+    open var parentScopeIdentifier: ScopeIdentifier? = null
 
     fun installModule() {
-        KTP.openRootScope().openSubScopes().installModules(this)
+        val parentScope = parentScopeIdentifier?.let { KTP.openScope(it) } ?: KTP.openRootScope()
+        parentScope.openSubScopes().installModules(this)
     }
 
-    fun isOpen() = KTP.isScopeOpen(ScopeIdentifier(this::class, scopeName))
+    private fun Scope.openSubScopes(): Scope = openDependentScopes().openSubScope(scopeIdentifier)
+
+    protected open fun Scope.openDependentScopes(): Scope = this
+
+    fun isOpen() = KTP.isScopeOpen(scopeIdentifier)
 
     fun close() {
-        KTP.closeScope(ScopeIdentifier(this::class, scopeName))
+        KTP.closeScope(scopeIdentifier)
         onCloseScope()
     }
 
-    protected abstract fun Scope.openSubScopes(): Scope
-
     protected open fun onCloseScope() {}
 
-    data class ScopeIdentifier(
-        private val moduleClass: KClass<out ScopeModule>,
-        private val scopeName: Any
-    )
+    @Parcelize
+    open class ScopeIdentifier(open val name: String) : Parcelable {
+        constructor(moduleClass: KClass<out ScopeModule>, name: String) : this(name) {
+            this.moduleClass = moduleClass
+        }
+
+        @IgnoredOnParcel
+        protected var moduleClass: KClass<out ScopeModule>? = null
+
+        inline fun <reified T> getInstanceFromScope(): T = KTP.openScope(this).getInstance()
+
+        override fun toString(): String = "${this::class.simpleName}${moduleClass?.run { "<${simpleName}>" } ?: ""}($name)"
+
+        override fun equals(other: Any?) = name == (other as? ScopeIdentifier)?.name
+
+        override fun hashCode() = name.hashCode()
+    }
 
     companion object {
-        inline fun <reified SM : ScopeModule> Any.injectScope(scopeName: Any) {
-            KTP.openScopes(ScopeIdentifier(SM::class, scopeName)).inject(this)
+        inline fun <reified SM : ScopeModule> Any.injectScope(scopeIdentifier: ScopeModule.ScopeIdentifier) {
+            KTP.openScope(scopeIdentifier).inject(this)
         }
+
+        inline fun <reified SM : ScopeModule> randomScopeIdentifier() = ScopeIdentifier(SM::class, UUID.randomUUID().toString())
     }
 }

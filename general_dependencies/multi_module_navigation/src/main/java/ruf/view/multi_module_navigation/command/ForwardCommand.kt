@@ -10,7 +10,7 @@ class ForwardCommand(private val getModule: ICustomizationCommand.() -> Fragment
     override fun execute(navigatorManager: INavigatorManager) {
         val customizationCommand = CustomizationCommand()
         val module = getModule(customizationCommand)
-        module.navigatorScopeName = navigatorManager.navigatorScopeName
+        module.parentScopeIdentifier = navigatorManager.navigatorScopeIdentifier
         module.installModule()
         navigatorManager.replace(module, customizationCommand)
     }

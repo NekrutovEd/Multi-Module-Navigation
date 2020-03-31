@@ -27,8 +27,8 @@ internal class ListFragment : LogFragment(), IView, IOnBackPressed {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false).apply {
-            val text = name.text.toString() + presenter.data.tag
-            logTag += presenter.data.tag
+            val text = name.text.toString() + presenter.data.textData
+            logTag += presenter.data.textData
             name.text = text
             open_detail.setOnClickListener { presenter.openDetail() }
             add_module.setOnClickListener { presenter.addModule() }
@@ -70,5 +70,8 @@ internal class ListFragment : LogFragment(), IView, IOnBackPressed {
     override fun onBackPressed() = navigator.onBackPressed()
 
     @InjectConstructor
-    class ListNavigatorProvider : NavigatorProvider(R.id.child_container, null)
+    class ListNavigatorProvider : NavigatorProvider(
+        containerId = R.id.child_container,
+        launcher = null
+    )
 }
