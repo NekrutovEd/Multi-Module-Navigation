@@ -53,9 +53,7 @@ abstract class ScopeModule : Module() {
     }
 
     companion object {
-        inline fun <reified SM : ScopeModule> Any.injectScope(scopeIdentifier: ScopeModule.ScopeIdentifier) {
-            KTP.openScope(scopeIdentifier).inject(this)
-        }
+        fun Any.injectScope(scopeIdentifier: ScopeIdentifier) = KTP.openScope(scopeIdentifier).inject(this)
 
         inline fun <reified SM : ScopeModule> randomScopeIdentifier() = ScopeIdentifier(SM::class, UUID.randomUUID().toString())
     }

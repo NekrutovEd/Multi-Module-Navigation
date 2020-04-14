@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import ruf.view.core.BaseFragment
-import ruf.view.core.IView
-import ruf.view.core.LogFragment
 import ruf.view.multi_module_navigation.IOnBackPressed
 import ruf.view.multi_module_navigation.module.FragmentModule.Companion.injectScope
 import ruf.view.multi_module_navigation.module.NavigatorProvider
@@ -22,7 +20,7 @@ internal class ListFragment : BaseFragment(), IOnBackPressed {
     private val navigator: INavigatorLifeCycle by inject(ListNavigator::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectScope<ListModule>(arguments)
+        injectScope(arguments)
         super.onCreate(savedInstanceState)
     }
 
