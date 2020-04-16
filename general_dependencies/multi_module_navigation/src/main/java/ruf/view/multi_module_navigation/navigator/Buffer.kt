@@ -13,7 +13,7 @@ internal class Buffer {
 
     fun executeAll(nav: INavigatorManager) {
         while (queue.isNotEmpty()) {
-            queue.poll().execute(nav)
+            queue.poll()?.execute(nav)
         }
     }
 }
