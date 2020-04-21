@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -28,11 +28,12 @@ android {
 
 dependencies {
     kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
-    annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
 
     implementation project(path: ':general_dependencies')
     implementation project(path: ':feature_example_box:shared_listdata')
     implementation project(path: ':feature_example_box:feature_list_presentation')
     implementation project(path: ':feature_example_box:feature_detail_presentation')
     implementation project(path: ':feature_example_box:feature_dialog')
+    implementation project(path: ':feature_example_box:feature_module_pager')
+    implementation project(path: ':feature_example_box:feature_navigator_container')
 }

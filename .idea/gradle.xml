@@ -15,6 +15,8 @@
             <option value="$PROJECT_DIR$/feature_example_box/feature_detail_presentation" />
             <option value="$PROJECT_DIR$/feature_example_box/feature_dialog" />
             <option value="$PROJECT_DIR$/feature_example_box/feature_list_presentation" />
+            <option value="$PROJECT_DIR$/feature_example_box/feature_module_pager" />
+            <option value="$PROJECT_DIR$/feature_example_box/feature_navigator_container" />
             <option value="$PROJECT_DIR$/feature_example_box/shared_listdata" />
             <option value="$PROJECT_DIR$/general_dependencies" />
             <option value="$PROJECT_DIR$/general_dependencies/core" />

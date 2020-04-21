@@ -22,7 +22,7 @@ abstract class FragmentModule(private val fragment: Class<out Fragment>) : Scope
     }
 
     companion object {
-        fun Fragment.injectScope(arguments: Bundle?) {
+        fun Any.injectScope(arguments: Bundle?) {
             val scopeIdentifier: ScopeIdentifier = arguments?.getParcelable(FRAGMENT_MODULE_KEY)
                 ?: error("Arguments haven't ScopeIdentifier for FragmentModule")
             injectScope(scopeIdentifier)

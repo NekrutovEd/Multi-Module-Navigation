@@ -14,9 +14,12 @@ class NavigatorModule(
     override val scopeIdentifier: ScopeIdentifier
 ) : ScopeModule() {
 
+    private val navigator = Navigator(containerId, launcher, scopeIdentifier)
+
     init {
-        val navigator = Navigator(containerId, launcher, scopeIdentifier)
         bind<INavigator>().toInstance(navigator)
         bind<ICommanderNavigator>().withName(ParentNavigator::class).toInstance(navigator)
     }
+
+    override fun onCloseScope() = navigator.closeAllModules()
 }

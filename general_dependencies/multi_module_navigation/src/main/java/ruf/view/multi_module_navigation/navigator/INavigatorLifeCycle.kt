@@ -13,4 +13,6 @@ interface INavigatorLifeCycle : IOnBackPressed {
     fun onSaveInstanceState(outState: Bundle)
 
     fun onViewStateRestored(savedInstanceState: Bundle?)
+
+    fun closeAllModules()
 }

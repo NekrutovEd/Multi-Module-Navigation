@@ -1,6 +1,8 @@
 package ruf.view.feature_detail_presentation
 
-interface IDetailRouter {
+import ruf.view.core.IRouter
+
+interface IDetailRouter : IRouter {
 
     fun addDetail(data: DetailData)
 

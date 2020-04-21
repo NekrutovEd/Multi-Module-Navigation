@@ -92,6 +92,8 @@ internal class Navigator(
         fragmentManager = null
     }
 
+    override fun closeAllModules() = stack.forEach { it.close() }
+
     override fun execute(command: ICommand) {
         if (fragmentManager != null) {
             command.execute(this)

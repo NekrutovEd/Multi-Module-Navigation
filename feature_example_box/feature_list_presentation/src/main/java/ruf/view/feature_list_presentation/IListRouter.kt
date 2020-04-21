@@ -1,6 +1,8 @@
 package ruf.view.feature_list_presentation
 
-interface IListRouter {
+import ruf.view.core.IRouter
+
+interface IListRouter : IRouter {
 
     fun openDetail()
 

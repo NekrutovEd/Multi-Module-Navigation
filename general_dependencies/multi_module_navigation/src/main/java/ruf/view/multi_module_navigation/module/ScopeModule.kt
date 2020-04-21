@@ -14,10 +14,10 @@ abstract class ScopeModule : Module() {
 
     abstract val scopeIdentifier: ScopeIdentifier
 
-    open var parentScopeIdentifier: ScopeIdentifier? = null
+    open var parentScopeIdentifier: ScopeIdentifier = EmptyScopeIdentifier
 
     fun installModule() {
-        val parentScope = parentScopeIdentifier?.let { KTP.openScope(it) } ?: KTP.openRootScope()
+        val parentScope = parentScopeIdentifier.takeUnless { it is EmptyScopeIdentifier }?.let { KTP.openScope(it) } ?: KTP.openRootScope()
         parentScope.openSubScopes().installModules(this)
     }
 
@@ -28,8 +28,8 @@ abstract class ScopeModule : Module() {
     fun isOpen() = KTP.isScopeOpen(scopeIdentifier)
 
     fun close() {
-        KTP.closeScope(scopeIdentifier)
         onCloseScope()
+        KTP.closeScope(scopeIdentifier)
     }
 
     protected open fun onCloseScope() {}
@@ -51,6 +51,9 @@ abstract class ScopeModule : Module() {
 
         override fun hashCode() = name.hashCode()
     }
+
+    @Parcelize
+    object EmptyScopeIdentifier : ScopeIdentifier("")
 
     companion object {
         fun Any.injectScope(scopeIdentifier: ScopeIdentifier) = KTP.openScope(scopeIdentifier).inject(this)

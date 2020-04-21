@@ -13,7 +13,7 @@ abstract class NavigatorProvider(
     private val containerId: Int,
     private val launcher: ILauncher?,
     private val scopeIdentifier: ScopeModule.ScopeIdentifier = randomScopeIdentifier<NavigatorModule>(),
-    private val parentScopeIdentifier: ScopeModule.ScopeIdentifier? = null
+    private val parentScopeIdentifier: ScopeModule.ScopeIdentifier = ScopeModule.EmptyScopeIdentifier
 ) : Provider<INavigator> {
 
     private fun initNavigator() {
