@@ -18,5 +18,6 @@ interface INavigatorManager {
 
     fun popBackStack()
 
-    fun popBackStackTo(kClass: KClass<out FragmentModule>?)
+    /** @return | -1 = stack.empty | n = count step back | */
+    fun popBackStackTo(kClass: KClass<out FragmentModule>?): Int
 }

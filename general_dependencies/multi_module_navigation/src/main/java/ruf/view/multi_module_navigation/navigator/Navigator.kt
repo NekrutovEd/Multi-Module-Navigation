@@ -138,19 +138,29 @@ internal class Navigator(
         }
     }
 
-    override fun popBackStackTo(kClass: KClass<out FragmentModule>?) {
-        if (kClass == null) {
-            fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            stack.forEach { it.close() }
-            stack.clear()
-        } else if (stack.isNotEmpty()) {
-            val fragmentModule = stack.findLast { it::class == kClass }
-            val distance = stack.search(fragmentModule)
-            if (distance <= 1) return
-            fragmentManager?.popBackStackImmediate(fragmentModule?.scopeTag, 0)
-            for (i in 1 until distance) {
-                stack.popAndClose()
+    override fun popBackStackTo(kClass: KClass<out FragmentModule>?): Int {
+        return when {
+            kClass == null -> {
+                val sizeStack = stack.size
+                fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                stack.forEach { it.close() }
+                stack.clear()
+                sizeStack
             }
+
+            stack.isNotEmpty() -> {
+                val fragmentModule = stack.findLast { it::class == kClass }
+                val distance = stack.search(fragmentModule) - 1
+                if (distance > 0) {
+                    fragmentManager?.popBackStackImmediate(fragmentModule?.scopeTag, 0)
+                    for (i in 0 until distance) {
+                        stack.popAndClose()
+                    }
+                }
+                distance
+            }
+
+            else -> -1
         }
     }
 }

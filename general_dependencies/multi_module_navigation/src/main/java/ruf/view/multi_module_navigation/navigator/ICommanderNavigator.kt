@@ -16,7 +16,6 @@ interface ICommanderNavigator : ICommandExecutor {
 
     fun back() = execute(BackCommand())
 
-    /** @return | -1 = stack.empty | n = count step back | */
     fun backTo(kClass: KClass<out FragmentModule>?) =
         execute(BackToCommand(kClass))
 
