@@ -14,9 +14,9 @@ import toothpick.ktp.delegate.inject
 
 class PagerFragment : BaseFragment(), IView {
 
-    override val presenter: PagerPresenter by inject()
+    override val presenter by inject<PagerPresenter>()
 
-    private val scopeIdentifier: ScopeModule.ScopeIdentifier by inject(PagerIdentifier::class)
+    private val scopeIdentifier by inject<ScopeModule.ScopeIdentifier>(PagerIdentifier::class)
     private val moduleStatePagerAdapter by lazy { ModuleStatePagerAdapter(scopeIdentifier, childFragmentManager) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

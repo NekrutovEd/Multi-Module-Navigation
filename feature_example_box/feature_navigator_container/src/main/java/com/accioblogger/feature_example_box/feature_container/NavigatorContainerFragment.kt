@@ -17,7 +17,7 @@ import toothpick.ktp.delegate.inject
 
 class NavigatorContainerFragment : Fragment(), IOnBackPressed {
 
-    private val navigator: INavigatorLifeCycle by inject(ContainerNavigator::class)
+    private val navigator by inject<INavigatorLifeCycle>(ContainerNavigator::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectScope(arguments)

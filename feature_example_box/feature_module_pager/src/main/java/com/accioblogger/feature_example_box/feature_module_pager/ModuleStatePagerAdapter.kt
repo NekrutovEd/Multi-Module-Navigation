@@ -11,7 +11,7 @@ class ModuleStatePagerAdapter(
     fragmentManager: FragmentManager
 ) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val list: MutableList<Pair<FragmentModule, Fragment>> = mutableListOf()
+    private val list = mutableListOf<Pair<FragmentModule, Fragment>>()
 
     fun addModules(modules: List<FragmentModule>) {
         list.addAll(modules.map { it to it.createFragment() })

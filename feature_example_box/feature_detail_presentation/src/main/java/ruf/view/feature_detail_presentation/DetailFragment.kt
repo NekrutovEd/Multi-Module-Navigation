@@ -12,7 +12,7 @@ import toothpick.ktp.delegate.inject
 
 internal class DetailFragment : BaseFragment(), IView {
 
-    override val presenter: DetailPresenter by inject()
+    override val presenter by inject<DetailPresenter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectScope(arguments)

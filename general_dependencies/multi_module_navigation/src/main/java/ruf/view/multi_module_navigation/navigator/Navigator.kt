@@ -149,7 +149,7 @@ internal class Navigator(
             }
 
             stack.isNotEmpty() -> {
-                val fragmentModule = stack.findLast { it::class == kClass }
+                val fragmentModule = stack.findLast { it.containsModule(kClass) }
                 val distance = stack.search(fragmentModule) - 1
                 if (distance > 0) {
                     fragmentManager?.popBackStackImmediate(fragmentModule?.scopeTag, 0)

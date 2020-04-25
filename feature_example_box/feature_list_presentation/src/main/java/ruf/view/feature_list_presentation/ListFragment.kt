@@ -15,9 +15,9 @@ import toothpick.ktp.delegate.inject
 
 internal class ListFragment : BaseFragment(), IOnBackPressed {
 
-    override val presenter: ListPresenter by inject()
+    override val presenter by inject<ListPresenter>()
 
-    private val navigator: INavigatorLifeCycle by inject(ListNavigator::class)
+    private val navigator by inject<INavigatorLifeCycle>(ListNavigator::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectScope(arguments)

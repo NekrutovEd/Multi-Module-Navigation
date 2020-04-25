@@ -14,7 +14,7 @@ import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 
 class ContainerFragment : LogFragment(), IOnBackPressed {
 
-    private val mainNavigator: INavigatorLifeCycle by lazy { RootNavigatorProvider().get() }
+    private val mainNavigator by lazy<INavigatorLifeCycle> { RootNavigatorProvider().get() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.container_fragment, container, false)

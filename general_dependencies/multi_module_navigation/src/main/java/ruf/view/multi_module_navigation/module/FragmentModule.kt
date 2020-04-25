@@ -21,6 +21,8 @@ abstract class FragmentModule(private val fragment: Class<out Fragment>) : Scope
         it.arguments = arguments
     }
 
+    open fun containsModule(kClass: KClass<out FragmentModule>): Boolean = this::class == kClass
+
     companion object {
         fun Any.injectScope(arguments: Bundle?) {
             val scopeIdentifier: ScopeIdentifier = arguments?.getParcelable(FRAGMENT_MODULE_KEY)

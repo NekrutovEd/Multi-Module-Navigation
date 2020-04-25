@@ -8,19 +8,15 @@ import kotlin.reflect.KClass
 
 interface ICommanderNavigator : ICommandExecutor {
 
-    fun forward(getModule: ICustomizationCommand.() -> FragmentModule) =
-        execute(ForwardCommand(getModule))
+    fun forward(getModule: ICustomizationCommand.() -> FragmentModule) = execute(ForwardCommand(getModule))
 
-    fun replace(getModule: ICustomizationCommand.() -> FragmentModule) =
-        execute(ReplaceCommand(getModule))
+    fun replace(getModule: ICustomizationCommand.() -> FragmentModule) = execute(ReplaceCommand(getModule))
 
     fun back() = execute(BackCommand())
 
-    fun backTo(kClass: KClass<out FragmentModule>?) =
-        execute(BackToCommand(kClass))
+    fun backTo(kClass: KClass<out FragmentModule>?) = execute(BackToCommand(kClass))
 
-    fun showDialog(getDialogModule: ICustomizationCommand.() -> DialogFragmentModule) =
-        execute(ShowDialogCommand(getDialogModule))
+    fun showDialog(getDialogModule: ICustomizationCommand.() -> DialogFragmentModule) = execute(ShowDialogCommand(getDialogModule))
 }
 
 inline fun <reified K : FragmentModule> ICommanderNavigator.backTo() = backTo(K::class)
