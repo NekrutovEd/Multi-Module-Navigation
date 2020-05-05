@@ -67,7 +67,7 @@ DI-модуль = Класс, наследник FragmentModule(из либы), 
 ### Схема зависимостей: https://www.figma.com/file/BBDBKeaGKbkd9aohT3mqmc/Multi-Module-Navigation?node-id=0%3A1
 
 
-
+#### Сама библиотека находится в модуле "general_dependencies : multi_module_navigation"
 
 
 
