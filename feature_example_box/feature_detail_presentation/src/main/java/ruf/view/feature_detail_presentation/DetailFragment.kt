@@ -14,6 +14,8 @@ internal class DetailFragment : BaseFragment(), IView {
 
     override val presenter by inject<DetailPresenter>()
 
+    override var title = "DetailFragment"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         injectScope(arguments)
         super.onCreate(savedInstanceState)

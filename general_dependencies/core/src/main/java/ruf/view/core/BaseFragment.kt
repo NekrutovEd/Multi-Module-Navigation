@@ -2,6 +2,9 @@ package ruf.view.core
 
 abstract class BaseFragment : LogFragment(), IView {
 
+    open var title: String = ""
+        protected set
+
     protected abstract val presenter: IPresenter
 
     override fun onStart() {

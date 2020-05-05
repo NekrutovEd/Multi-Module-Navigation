@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/feature_example_box" />
+            <option value="$PROJECT_DIR$/feature_example_box/com_toolbar" />
             <option value="$PROJECT_DIR$/feature_example_box/feature_detail_presentation" />
             <option value="$PROJECT_DIR$/feature_example_box/feature_dialog" />
             <option value="$PROJECT_DIR$/feature_example_box/feature_list_presentation" />

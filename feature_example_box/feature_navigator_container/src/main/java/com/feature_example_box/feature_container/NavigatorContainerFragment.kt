@@ -1,10 +1,11 @@
-package com.accioblogger.feature_example_box.feature_container
+package com.feature_example_box.feature_container
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.accioblogger.feature_example_box.feature_container.R
 import ruf.view.multi_module_navigation.IOnBackPressed
 import ruf.view.multi_module_navigation.UniversalLauncher
 import ruf.view.multi_module_navigation.module.FragmentModule

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TEST TEXT</string>
+
+    <string name="menu_nav_item_back">Back</string>
+    <string name="menu_nav_item_close">Close</string>
+
+    <string name="menu_item_add">Add</string>
+    <string name="menu_item_search">Search</string>
+    <string name="menu_item_statistics">Statistics</string>
+</resources>

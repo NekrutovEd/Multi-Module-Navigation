@@ -1,4 +1,4 @@
-package com.accioblogger.feature_example_box.feature_module_pager
+package com.feature_example_box.feature_module_pager
 
 import javax.inject.Qualifier
 

@@ -10,3 +10,5 @@ include ':feature_example_box:feature_dialog'
 include ':feature_example_box:shared_listdata'
 include ':feature_example_box:feature_module_pager'
 include ':feature_example_box:feature_navigator_container'
+
+include ':feature_example_box:com_toolbar'

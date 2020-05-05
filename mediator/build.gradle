@@ -36,4 +36,5 @@ dependencies {
     implementation project(path: ':feature_example_box:feature_dialog')
     implementation project(path: ':feature_example_box:feature_module_pager')
     implementation project(path: ':feature_example_box:feature_navigator_container')
+    implementation project(path: ':feature_example_box:com_toolbar')
 }

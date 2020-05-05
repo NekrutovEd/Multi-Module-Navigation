@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.accioblogger.feature_example_box.feature_module_pager.VerticalViewPager
+    <com.feature_example_box.feature_module_pager.VerticalViewPager
             android:id="@+id/viewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"

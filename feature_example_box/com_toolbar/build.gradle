@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+
+    kotlinOptions.jvmTarget = 1.8
+
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'
+
+    implementation project(path: ':general_dependencies')
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+}

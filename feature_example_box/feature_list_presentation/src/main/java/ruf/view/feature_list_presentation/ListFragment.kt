@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ruf.view.core.actions.IAddItemListener
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import ruf.view.core.BaseFragment
 import ruf.view.multi_module_navigation.IOnBackPressed
@@ -13,21 +14,23 @@ import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
 import toothpick.InjectConstructor
 import toothpick.ktp.delegate.inject
 
-internal class ListFragment : BaseFragment(), IOnBackPressed {
+internal class ListFragment : BaseFragment(), IOnBackPressed, IAddItemListener {
 
     override val presenter by inject<ListPresenter>()
+
+    override var title = "ListFragment"
 
     private val navigator by inject<INavigatorLifeCycle>(ListNavigator::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectScope(arguments)
+        logTag += presenter.data.textData
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false).apply {
             val text = name.text.toString() + presenter.data.textData
-            logTag += presenter.data.textData
             name.text = text
             open_detail.setOnClickListener { presenter.openDetail() }
             add_module.setOnClickListener { presenter.addModule() }
@@ -57,6 +60,8 @@ internal class ListFragment : BaseFragment(), IOnBackPressed {
     }
 
     override fun onBackPressed() = navigator.onBackPressed()
+
+    override fun onClickItemAdd() = presenter.addModule()
 
     @InjectConstructor
     class ListNavigatorProvider : NavigatorProvider(
