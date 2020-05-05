@@ -2,7 +2,7 @@ package ruf.view.feature_list_presentation
 
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
-import ruf.view.core.RouterClass
+import ruf.view.core.IRouterClass
 import ruf.view.multi_module_navigation.module.FragmentModule
 import ruf.view.multi_module_navigation.navigator.ICommanderNavigator
 import ruf.view.multi_module_navigation.navigator.INavigatorLifeCycle
@@ -12,7 +12,7 @@ import toothpick.ktp.binding.bind
 
 @Parcelize
 data class ListModule (
-    private val routerClass: RouterClass<IListRouter>,
+    private val routerClass: IRouterClass<IListRouter>,
     private val textData: String,
     override val scopeIdentifier: ScopeIdentifier = randomScopeIdentifier<ListModule>()
 ) : FragmentModule(ListFragment::class) {

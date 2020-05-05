@@ -1,11 +1,10 @@
 package ruf.view.mediator.detail
 
 import kotlinx.android.parcel.Parcelize
-import ruf.view.core.RouterClass
-import ruf.view.mediator.detail.DetailRouter
+import ruf.view.core.IRouterClass
 
 @Parcelize
-object DetailRouterClass : RouterClass<DetailRouter> {
+object DetailRouterClass : IRouterClass<DetailRouter> {
 
     override val kClass get() = DetailRouter::class
 }

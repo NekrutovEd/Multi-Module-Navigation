@@ -1,11 +1,10 @@
 package ruf.view.mediator.list
 
 import kotlinx.android.parcel.Parcelize
-import ruf.view.core.RouterClass
-import ruf.view.mediator.list.ListRouter
+import ruf.view.core.IRouterClass
 
 @Parcelize
-object ListRouterClass : RouterClass<ListRouter> {
+object ListRouterClass : IRouterClass<ListRouter> {
 
     override val kClass get() = ListRouter::class
 }
