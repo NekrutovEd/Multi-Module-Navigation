@@ -1,5 +1,7 @@
-package ruf.view.mediator.detail
+package ruf.view.mediator.router.detail
 
+import kotlinx.android.parcel.Parcelize
+import ruf.view.core.IRouterClass
 import ruf.view.feature_detail_presentation.DetailData
 import ruf.view.feature_detail_presentation.DetailModule
 import ruf.view.feature_detail_presentation.IDetailRouter
@@ -21,7 +23,7 @@ class DetailRouter(
         commander.forward {
             val newData = data.copy(text = "${data.text}+${++(commander as INavigator).counter}")
 
-            DetailModule(DetailRouterClass, newData, scopeNameIdentifier)
+            DetailModule(Class, newData, scopeNameIdentifier)
         }
     }
 
@@ -29,11 +31,16 @@ class DetailRouter(
         commander.replace {
             val newData = data.copy(text = data.text.replaceAfterLast('+', (++(commander as INavigator).counter).toString()))
 
-            DetailModule(DetailRouterClass, newData, scopeNameIdentifier)
+            DetailModule(Class, newData, scopeNameIdentifier)
         }
     }
 
     override fun back() = commander.back()
 
     override fun closeDetail() = commander.backTo<ListModule>()
+
+    @Parcelize
+    object Class : IRouterClass<DetailRouter> {
+        override val kClass get() = DetailRouter::class
+    }
 }

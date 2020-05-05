@@ -12,8 +12,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
 
-        KTP.openRootScope()
-            .openSubScope(ExampleApiModule.scopeIdentifier).installModules(ExampleApiModule())
+        KTP.openScope(ExampleRootModule.scopeIdentifier).installModules(ExampleRootModule())
+
+        ExampleApiModule().installModule()
 
         supportFragmentManager.findFragmentByTag(TAG_CONTAINER)
             ?: supportFragmentManager.beginTransaction()

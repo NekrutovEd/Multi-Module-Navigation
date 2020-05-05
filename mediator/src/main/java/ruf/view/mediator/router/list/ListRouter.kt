@@ -1,5 +1,7 @@
-package ruf.view.mediator.list
+package ruf.view.mediator.router.list
 
+import kotlinx.android.parcel.Parcelize
+import ruf.view.core.IRouterClass
 import ruf.view.feature_detail_presentation.DetailData
 import ruf.view.feature_detail_presentation.DetailModule
 import ruf.view.feature_dialog.ExampleDialogModule
@@ -7,7 +9,7 @@ import ruf.view.feature_list_presentation.IListRouter
 import ruf.view.feature_list_presentation.ListModule
 import ruf.view.feature_list_presentation.ListNavigator
 import ruf.view.mediator.R
-import ruf.view.mediator.detail.DetailRouterClass
+import ruf.view.mediator.router.detail.DetailRouter
 import ruf.view.multi_module_navigation.ParentNavigator
 import ruf.view.multi_module_navigation.navigator.ICommanderNavigator
 import ruf.view.shared_listdata.ExampleSharedModule
@@ -25,7 +27,7 @@ class ListRouter(
             R.anim.first_list_enter, R.anim.first_list_exit,
             R.anim.first_list_enter, R.anim.first_list_exit
         )
-        DetailModule(DetailRouterClass, DetailData("First detail"), exampleSharedIdentifier)
+        DetailModule(DetailRouter.Class, DetailData("First detail"), exampleSharedIdentifier)
     }
 
     override fun showDialog() = parentCommander.showDialog { ExampleDialogModule() }
@@ -37,10 +39,16 @@ class ListRouter(
                 R.anim.first_list_enter, R.anim.first_list_exit,
                 R.anim.first_list_enter, R.anim.first_list_exit
             )
-            ListModule(ListRouterClass, tag)
-//            DetailModule(DetailRouterClass, DetailData("List detail"), exampleSharedIdentifier)
+            ListModule(Class, tag)
+//            DetailModule(DetailRouter.Class, DetailData("List detail"), exampleSharedIdentifier)
         }
     }
 
     override fun removeListModule() = listCommander.back()
+
+
+    @Parcelize
+    object Class : IRouterClass<ListRouter> {
+        override val kClass get() = ListRouter::class
+    }
 }
