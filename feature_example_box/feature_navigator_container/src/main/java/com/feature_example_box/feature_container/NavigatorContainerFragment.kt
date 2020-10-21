@@ -21,7 +21,7 @@ class NavigatorContainerFragment : Fragment(), IOnBackPressed {
     private val navigator by inject<INavigatorLifeCycle>(ContainerNavigator::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectScope(arguments)
+        injectScope()
         super.onCreate(savedInstanceState)
     }
 

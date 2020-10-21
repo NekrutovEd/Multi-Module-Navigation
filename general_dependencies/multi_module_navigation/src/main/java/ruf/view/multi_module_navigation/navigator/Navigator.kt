@@ -63,7 +63,7 @@ internal class Navigator(
                 ?.also {
                     stack.clear()
                     stack.addAll(it)
-                    stack.peek()?.also { module ->
+                    stack.reversed().forEach { module ->
                         module.parentScopeIdentifier = navigatorScopeIdentifier
                         module.installModule()
                     }

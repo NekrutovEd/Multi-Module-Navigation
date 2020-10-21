@@ -23,7 +23,7 @@ internal class ListFragment : BaseFragment(), IOnBackPressed, IAddItemListener {
     private val navigator by inject<INavigatorLifeCycle>(ListNavigator::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectScope(arguments)
+        injectScope()
         logTag += presenter.data.textData
         super.onCreate(savedInstanceState)
     }

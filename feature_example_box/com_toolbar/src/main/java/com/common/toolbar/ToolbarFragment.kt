@@ -28,7 +28,7 @@ internal class ToolbarFragment : BaseFragment(), IOnBackPressed {
     private val launchModule by inject<FragmentModule>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectScope(arguments)
+        injectScope()
         super.onCreate(savedInstanceState)
     }
 

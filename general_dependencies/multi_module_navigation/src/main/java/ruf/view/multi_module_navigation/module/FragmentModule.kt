@@ -24,10 +24,13 @@ abstract class FragmentModule(private val fragment: Class<out Fragment>) : Scope
     open fun containsModule(kClass: KClass<out FragmentModule>): Boolean = this::class == kClass
 
     companion object {
-        fun Any.injectScope(arguments: Bundle?) {
+
+        fun Fragment.injectScope() = injectScopeTo(this)
+
+        fun Fragment.injectScopeTo(target: Any) {
             val scopeIdentifier: ScopeIdentifier = arguments?.getParcelable(FRAGMENT_MODULE_KEY)
                 ?: error("Arguments haven't ScopeIdentifier for FragmentModule")
-            injectScope(scopeIdentifier)
+            target.injectScope(scopeIdentifier)
         }
     }
 }

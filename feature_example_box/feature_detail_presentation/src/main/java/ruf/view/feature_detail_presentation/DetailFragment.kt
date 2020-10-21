@@ -17,7 +17,7 @@ internal class DetailFragment : BaseFragment(), IView {
     override var title = "DetailFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectScope(arguments)
+        injectScope()
         super.onCreate(savedInstanceState)
     }
 

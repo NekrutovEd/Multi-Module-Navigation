@@ -26,7 +26,7 @@ class PagerFragment : BaseFragment(), IView {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectScope(arguments)
+        injectScope()
         super.onCreate(savedInstanceState)
     }
 
